@@ -7,7 +7,8 @@ import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import TabOneScreen from '../screens/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
-import { BottomTabParamList, TabOneParamList, TabTwoParamList } from '../types';
+import SearchScreen from '../screens/SearchScreen';
+import { BottomTabParamList, TabOneParamList, TabTwoParamList, SearchParamList } from '../types';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -28,6 +29,13 @@ export default function BottomTabNavigator() {
       <BottomTab.Screen
         name="TabTwo"
         component={TabTwoNavigator}
+        options={{
+          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+        }}
+      />
+      <BottomTab.Screen
+        name="Search"
+        component={SearchNavigator}
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
         }}
@@ -71,3 +79,18 @@ function TabTwoNavigator() {
     </TabTwoStack.Navigator>
   );
 }
+
+const SearchStack = createStackNavigator<SearchParamList>();
+
+function SearchNavigator() {
+  return (
+    <SearchStack.Navigator>
+      <SearchStack.Screen
+        name="Search"
+        component={SearchScreen}
+        options={{ headerTitle: 'Search' }}
+      />
+    </SearchStack.Navigator>
+  );
+}
+
