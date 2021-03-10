@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { StyleSheet, TextInput, FlatList, SectionList, Image } from 'react-native';
+import { StyleSheet, FlatList, Image } from 'react-native';
 
-import { Text, View } from '../components/Themed';
+import { Text, View, TextInput } from '../components/Themed';
 
 const DATA = [
   {
@@ -72,8 +72,7 @@ export default function SearchScreen() {
   const [value, onChangeText] = React.useState("");
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>ost er bare mælkeyeet</Text>
-      <TextInput style={{ height: 40, borderColor: 'gray', borderWidth: 1, backgroundColor: 'white'}} onChangeText={text => onChangeText(text)} value={value}  placeholder={"Søgeord"} />
+      <TextInput style={{ height: 40, borderColor: 'gray', borderWidth: 1}} placeholder={"Søgeord"} />
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
       <FlatList
         data={DATA}
