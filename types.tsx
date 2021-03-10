@@ -43,7 +43,7 @@ export type Restaurant = {
 
 export type SmileyReport = {
     smiley: number;
-    date: Date;
+    date: string;
     url: string;
 }
 
@@ -65,6 +65,6 @@ export enum NotificationType {
 export type Notification = {
     restaurant_id: number;
     type: number;  // map to enum NotificationType
-    date: Date;
+    date: string;
     new_data: any;
 }

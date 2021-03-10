@@ -1,0 +1,16 @@
+{
+  "notifications": [
+    {
+      "restaurant_id": 2,
+      "type": 0,
+      "date": "3 dage siden",
+      "new_data": 4
+    },
+    {
+      "restaurant_id": 5,
+      "type": 0,
+      "date": "4 dage siden",
+      "new_data": 0
+    }
+  ]
+}
