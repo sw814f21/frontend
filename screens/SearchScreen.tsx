@@ -2,68 +2,38 @@ import * as React from 'react';
 import { StyleSheet, FlatList, Image } from 'react-native';
 
 import { Text, View, TextInput } from '../components/Themed';
+import { getRestaurants } from "../api/sample_api";
+import { SmileyHappy, SmileyNeutral, SmileyOkay, SmileySad } from "../components/Smileys";
+import { Smiley } from "../types";
 
-const DATA = [
-  {
-    id: 1,
-    favorite: true,
-    current_smiley: "elite",
-    title: 'McDonald\'s Aalborg',
-    distance: 5900
-  },
-  {
-    id: 2,
-    favorite: true,
-    current_smiley: "elite",
-    title: 'Kings Pizza',
-    distance: 12100
-  },
-  {
-    id: 3,
-    favorite: true,
-    current_smiley: "elite",
-    title: 'Jettes Vafler',
-    distance: 5900
-  },
-  {
-    id: 4,
-    favorite: true,
-    current_smiley: "elite",
-    title: 'Café hygge',
-    distance: 14000
-  },
-  {
-    id: 5,
-    favorite: true,
-    current_smiley: "elite",
-    title: 'Jensens Fiskehus',
-    distance: 14100
-  },
-  {
-    id: 6,
-    favorite: true,
-    current_smiley: "elite",
-    title: 'Burger King Aalborg',
-    distance: 15000
-  },
-  {
-    id: 7,
-    favorite: true,
-    current_smiley: "elite",
-    title: 'Bella Italia',
-    distance: 16000
-  },
-];
+const test_data = getRestaurants();
 
-function Item({ title, distance }: {title: string, distance: number}) {
+const DATA = getRestaurants()['restaurants'];
+
+function Item({ title, address, smiley}: {title: string, address: string, smiley: number}) {
+  let currSmiley;
+  switch (smiley) {
+    case Smiley.Bad:
+      currSmiley = SmileySad;
+      break;
+    case Smiley.Decent:
+      currSmiley = SmileyOkay;
+      break
+    case Smiley.Good:
+      currSmiley = SmileyHappy;
+      break;
+    case Smiley.Neutral:
+      currSmiley = SmileyNeutral;
+      break;
+    default:
+      currSmiley = SmileyHappy;
+      break;
+  }
   return (
     <View style={styles.item}>
       <Text style={styles.title}>{title}</Text>
-      <Image
-        style={{ width: 50, height: 50 }}
-        source={{ uri: 'https://www.findsmiley.dk/Hjaelp/Symbolforklaring/PublishingImages/Sider/default/EliteSm.jpg' }}
-      />
-      <Text style={styles.title}>{distance}</Text>
+      {currSmiley()}
+      <Text style={styles.title}>{address}</Text>
     </View>
   );
 }
@@ -76,7 +46,7 @@ export default function SearchScreen() {
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
       <FlatList
         data={DATA}
-        renderItem={({ item }) => <Item title={item.title} distance={item.distance} />}
+        renderItem={({ item }) => <Item title={item.name} address={item.address} smiley={item.cur_smiley} />}
       />
     </View>
   );
