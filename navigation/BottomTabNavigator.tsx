@@ -7,6 +7,7 @@ import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import TabOneScreen from '../screens/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
+import MapScreen from "../screens/MapScreen";
 import { BottomTabParamList, SearchParamList, NotificationParamList, MapParamList,
     FavoriteParamList, ProfileParamList } from '../types';
 
@@ -109,7 +110,7 @@ function MapNavigator() {
         <MapStack.Navigator>
             <MapStack.Screen
                 name="MapScreen"
-                component={TabTwoScreen}
+                component={MapScreen}
                 options={{ headerTitle: i18n.t('nav.map_title') }}
             />
         </MapStack.Navigator>
