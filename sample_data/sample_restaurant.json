@@ -29,8 +29,8 @@
           "url": "https://www.findsmiley.dk/Sider/KontrolRapport.aspx?Virk1583317"
         }
       ],
-      "geo_lat": "69.000",
-      "geo_long": "420.000"
+      "geo_lat": 56.1915,
+      "geo_long": 11.6345
     },
     {
       "id": 1,
@@ -61,8 +61,8 @@
           "url": "https://www.findsmiley.dk/Sider/KontrolRapport.aspx?Virk1583317"
         }
       ],
-      "geo_lat": "69.000",
-      "geo_long": "420.000"
+      "geo_lat": 69.000,
+      "geo_long": 420.000
     },
     {
       "id": 2,
@@ -93,8 +93,8 @@
           "url": "https://www.findsmiley.dk/Sider/KontrolRapport.aspx?Virk1583317"
         }
       ],
-      "geo_lat": "69.000",
-      "geo_long": "420.000"
+      "geo_lat": 69.000,
+      "geo_long": 420.000
     },
     {
       "id": 3,
@@ -125,8 +125,8 @@
           "url": "https://www.findsmiley.dk/Sider/KontrolRapport.aspx?Virk1583317"
         }
       ],
-      "geo_lat": "69.000",
-      "geo_long": "420.000"
+      "geo_lat": 69.000,
+      "geo_long": 420.000
     },
     {
       "id": 4,
@@ -157,8 +157,8 @@
           "url": "https://www.findsmiley.dk/Sider/KontrolRapport.aspx?Virk1583317"
         }
       ],
-      "geo_lat": "69.000",
-      "geo_long": "420.000"
+      "geo_lat": 69.000,
+      "geo_long": 420.000
     },
     {
       "id": 5,
@@ -189,8 +189,8 @@
           "url": "https://www.findsmiley.dk/Sider/KontrolRapport.aspx?Virk1583317"
         }
       ],
-      "geo_lat": "69.000",
-      "geo_long": "420.000"
+      "geo_lat": 69.000,
+      "geo_long": 420.000
     },
     {
       "id": 6,
@@ -221,8 +221,8 @@
           "url": "https://www.findsmiley.dk/Sider/KontrolRapport.aspx?Virk1583317"
         }
       ],
-      "geo_lat": "69.000",
-      "geo_long": "420.000"
+      "geo_lat": 69.000,
+      "geo_long": 420.000
     },
     {
       "id": 7,
@@ -253,8 +253,8 @@
           "url": "https://www.findsmiley.dk/Sider/KontrolRapport.aspx?Virk1583317"
         }
       ],
-      "geo_lat": "69.000",
-      "geo_long": "420.000"
+      "geo_lat": 69.000,
+      "geo_long": 420.000
     }
   ]
 }
