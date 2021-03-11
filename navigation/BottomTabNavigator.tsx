@@ -11,6 +11,8 @@ import SearchScreen from "../screens/SearchScreen";
 import { BottomTabParamList, SearchParamList, NotificationParamList, MapParamList,
     FavoriteParamList, ProfileParamList } from '../types';
 
+import i18n from "../i18n/i18n";
+
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
 export default function BottomTabNavigator() {
@@ -81,7 +83,7 @@ function SearchNavigator() {
       <SearchStack.Screen
         name="SearchScreen"
         component={SearchScreen}
-        options={{ headerTitle: 'Search' }}
+        options={{ headerTitle: i18n.t('nav.search_title') }}
       />
     </SearchStack.Navigator>
   );
@@ -95,7 +97,7 @@ function NotificationNavigator() {
       <NotificationStack.Screen
         name="NotificationScreen"
         component={TabTwoScreen}
-        options={{ headerTitle: 'Notifications' }}
+        options={{ headerTitle: i18n.t('nav.notifications_title') }}
       />
     </NotificationStack.Navigator>
   );
@@ -109,7 +111,7 @@ function MapNavigator() {
             <MapStack.Screen
                 name="MapScreen"
                 component={TabTwoScreen}
-                options={{ headerTitle: 'Map' }}
+                options={{ headerTitle: i18n.t('nav.map_title') }}
             />
         </MapStack.Navigator>
     );
@@ -123,7 +125,7 @@ function FavoriteNavigator() {
             <FavoriteStack.Screen
                 name="FavoriteScreen"
                 component={TabTwoScreen}
-                options={{ headerTitle: 'Favorites' }}
+                options={{ headerTitle: i18n.t('nav.favorite_title') }}
             />
         </FavoriteStack.Navigator>
     );
@@ -137,7 +139,7 @@ function ProfileNavigator() {
             <ProfileStack.Screen
                 name="ProfileScreen"
                 component={TabTwoScreen}
-                options={{ headerTitle: 'Profile' }}
+                options={{ headerTitle: i18n.t('nav.profile_title') }}
             />
         </ProfileStack.Navigator>
     );
