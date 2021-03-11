@@ -5,7 +5,10 @@ const enMessages = {
         map_title: 'Map',
         favorite_title: 'Favorites',
         profile_title: 'Profile',
-    }
+    },
+    search: {
+        placeholder: 'Searchword',
+    },
 }
 
 export default enMessages;

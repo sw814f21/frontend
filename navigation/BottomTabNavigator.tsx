@@ -8,6 +8,8 @@ import useColorScheme from '../hooks/useColorScheme';
 import TabOneScreen from '../screens/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
 import MapScreen from "../screens/MapScreen";
+import SearchScreen from "../screens/SearchScreen";
+
 import { BottomTabParamList, SearchParamList, NotificationParamList, MapParamList,
     FavoriteParamList, ProfileParamList } from '../types';
 
@@ -82,7 +84,7 @@ function SearchNavigator() {
     <SearchStack.Navigator>
       <SearchStack.Screen
         name="SearchScreen"
-        component={TabOneScreen}
+              component={SearchScreen}
         options={{ headerTitle: i18n.t('nav.search_title') }}
       />
     </SearchStack.Navigator>

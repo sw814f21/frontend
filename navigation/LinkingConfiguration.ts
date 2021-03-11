@@ -16,6 +16,11 @@ export default {
               TabTwoScreen: 'two',
             },
           },
+          Search: {
+            screens: {
+              Search: 'Søg',
+            },
+          },
         },
       },
       NotFound: '*',
