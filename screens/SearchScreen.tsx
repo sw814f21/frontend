@@ -1,18 +1,19 @@
+import { FontAwesome } from '@expo/vector-icons';
 import * as React from 'react';
 import { StyleSheet, FlatList, Image } from 'react-native';
 
 import { Text, View, TextInput } from '../components/Themed';
 import { getRestaurants } from "../api/sample_api";
 import { SmileyHappy, SmileyNeutral, SmileyOkay, SmileySad } from "../components/Smileys";
-import { Smiley } from "../types";
+import { Restaurant, Smiley } from "../types";
 import i18n from "../i18n/i18n";
 
 
 const DATA = getRestaurants()['restaurants'];
 
-function Item({ title, address, smiley }: { title: string, address: string, smiley: number }) {
+function Item({ restaurant }: { restaurant: Restaurant }) {
   let currSmiley;
-  switch (smiley) {
+  switch (restaurant.cur_smiley) {
     case Smiley.Bad:
       currSmiley = SmileySad;
       break;
@@ -31,10 +32,14 @@ function Item({ title, address, smiley }: { title: string, address: string, smil
   }
   return (
     <View style={styles.listitem}>
-      {currSmiley()}
+      <FontAwesome name='star-o' color='white' size={30} style={styles.icon} />
+      {currSmiley({ width: '10%' })}
       <View>
-        <Text style={styles.title}>{title}</Text>
-        <Text style={styles.address}>{address}</Text>
+        <Text style={styles.title}>{restaurant.name}</Text>
+        <Text>{restaurant.address}</Text>
+      </View>
+      <View style={{ marginLeft: 'auto' }}>
+        <Text>6.1km</Text>
       </View>
     </View>
   );
@@ -44,11 +49,13 @@ export default function SearchScreen() {
   const [value, onChangeText] = React.useState("");
   return (
     <View style={styles.container}>
-      <TextInput style={{ height: 40, borderColor: 'gray', borderWidth: 1 }} placeholder={i18n.t('search.placeholder')} />
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
+      <View style={styles.search}>
+        <FontAwesome name='search' color='white' size={20} style={styles.icon} />
+        <TextInput placeholder={i18n.t('search.placeholder')} style={styles.flex} />
+      </View>
       <FlatList
         data={DATA}
-        renderItem={({ item: restaurant }) => <Item title={restaurant.name} address={restaurant.address} smiley={restaurant.cur_smiley} />}
+        renderItem={({ item }) => <Item restaurant={item} />}
         keyExtractor={(item, _) => item.id.toString()}
       />
     </View>
@@ -65,19 +72,23 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
   },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
-  },
   listitem: {
-    backgroundColor: 'hotpink',
     padding: 20,
     marginVertical: 8,
     marginHorizontal: 16,
     flexDirection: 'row',
   },
-  address: {
-
+  icon: {
+    marginRight: 10,
+  },
+  flex: {
+    flex: 1,
+  },
+  search: {
+    flexDirection: 'row',
+    borderColor: 'gray',
+    borderWidth: 1,
+    borderRadius: 10,
+    padding: 10,
   },
 });
