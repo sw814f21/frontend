@@ -35,14 +35,6 @@ export type ProfileParamList = {
   data structures
  */
 
-export enum Smiley {
-    Elite = 0,
-    Good = 1,
-    Decent = 2,
-    Neutral = 3,
-    Bad = 4,
-}
-
 export type Restaurant = {
     id: number;
     name: string;
@@ -51,8 +43,8 @@ export type Restaurant = {
     city: string;
     cur_smiley: number;  // map to enum Smiley
     reports: SmileyReport[];
-    geo_lat: string;
-    geo_long: string;
+    geo_lat: number;
+    geo_long: number;
 }
 
 export type SmileyReport = {
