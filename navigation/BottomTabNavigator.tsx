@@ -82,7 +82,7 @@ function SearchNavigator() {
     <SearchStack.Navigator>
       <SearchStack.Screen
         name="SearchScreen"
-        component={SearchScreen}
+              component={SearchScreen}
         options={{ headerTitle: i18n.t('nav.search_title') }}
       />
     </SearchStack.Navigator>

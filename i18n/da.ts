@@ -5,7 +5,10 @@ const daMessages = {
         map_title: 'Kort',
         favorite_title: 'Favoritter',
         profile_title: 'Profil',
-    }
+    },
+    search: {
+        placeholder: 'Søgeord',
+    },
 }
 
 export default daMessages;
