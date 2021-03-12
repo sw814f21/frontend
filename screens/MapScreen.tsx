@@ -18,7 +18,8 @@ interface MapScreenProps {
 interface MapScreenState {
     region: Region,
     restaurantScreen: boolean
-    restaurant?: Restaurant
+    restaurant?: Restaurant,
+    markers: Restaurant[]
 }
 
 interface Region {
@@ -72,8 +73,17 @@ export default class MapScreen extends Component<MapScreenProps, MapScreenState>
                 longitudeDelta: 6.0695,
             },
             restaurantScreen: false,
-            restaurant: undefined
+            restaurant: undefined,
+            markers: [],
         }
+    }
+
+    componentDidMount() {
+        GetAPI().getRestaurants().then(res => {
+            this.setState({
+                markers: res
+            })
+        })
     }
 
     openRestaurant(obj: Restaurant) {
@@ -107,11 +117,11 @@ export default class MapScreen extends Component<MapScreenProps, MapScreenState>
                     showsUserLocation={true}
                     initialRegion={this.state.region}
                 >
-                    {GetAPI().getRestaurants().then(restaurants => {
-                        restaurants.map((smileyProps: Restaurant) => (
+                    {
+                        this.state.markers.map((smileyProps: Restaurant) => (
                             this.renderSmileyMarker(smileyProps)
                         ))
-                    })}
+                    }
                 </MapView>
             </View>
         );
