@@ -1,9 +1,0 @@
-{
-  "settings": [
-    {
-      "name": "Pushnotifikationer",
-      "description": "Få besked når der sker en opdatering på din favoritrestaurant",
-      "state": true
-    }
-  ]
-}

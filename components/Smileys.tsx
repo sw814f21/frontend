@@ -1,4 +1,5 @@
 import Svg, { Path, Styles } from 'react-native-svg';
+import i18n from "../i18n/i18n";
 import * as React from 'react';
 
 export type SmileyProps = {
@@ -6,6 +7,46 @@ export type SmileyProps = {
   width?: string,
   height?: string,
   viewBox?: string,
+}
+
+interface SmileyData {
+  smiley: any,
+  smileyText: string
+}
+
+export function smileyFromKey(key: number, props?: SmileyProps): SmileyData {
+  let smiley;
+  let smileyText;
+  switch (key) {
+    case Smiley.Elite:
+      smiley = EliteSmiley(props);
+      smileyText = i18n.t('smileyText.elite')
+      break;
+    case Smiley.Bad:
+      smiley = SmileySad(props);
+      smileyText = i18n.t('smileyText.bad')
+      break;
+    case Smiley.Decent:
+      smiley = SmileyOkay(props);
+      smileyText = i18n.t('smileyText.decent')
+      break;
+    case Smiley.Good:
+      smiley = SmileyHappy(props);
+      smileyText = i18n.t('smileyText.good')
+      break;
+    case Smiley.Neutral:
+      smiley = SmileyNeutral(props);
+      smileyText = i18n.t('smileyText.neutral')
+      break;
+    default:
+      smiley = SmileyHappy(props);
+      smileyText = i18n.t('smileyText.good')
+      break;
+  }
+  return {
+    smiley: smiley,
+    smileyText: smileyText
+  };
 }
 
 const defaultEliteProps: SmileyProps = {
@@ -34,7 +75,7 @@ export enum Smiley {
     Bad = 4,
 }
 
-export function EliteSmiley(props: SmileyProps) {
+export function EliteSmiley(props?: SmileyProps) {
   props = {...defaultEliteProps, ...props};
 
   return (
@@ -44,7 +85,7 @@ export function EliteSmiley(props: SmileyProps) {
   );
 }
 
-export function SmileySad(props: SmileyProps) {
+export function SmileySad(props?: SmileyProps) {
   props = { ...defaultSmileyProps, ...props };
   return (
     <Svg width={props.width} height={props.height} viewBox={props.viewBox} style={props.style}>
@@ -53,7 +94,7 @@ export function SmileySad(props: SmileyProps) {
   );
 }
 
-export function SmileyNeutral(props: SmileyProps) {
+export function SmileyNeutral(props?: SmileyProps) {
   props = { ...defaultSmileyProps, ...props };
   return (
     <Svg width={props.width} height={props.height} viewBox={props.viewBox} style={props.style}>
@@ -62,7 +103,7 @@ export function SmileyNeutral(props: SmileyProps) {
   );
 }
 
-export function SmileyOkay(props: SmileyProps) {
+export function SmileyOkay(props?: SmileyProps) {
   props = { ...defaultSmileyProps, ...props };
   return (
     <Svg width={props.width} height={props.height} viewBox={props.viewBox} style={props.style}>
@@ -71,7 +112,7 @@ export function SmileyOkay(props: SmileyProps) {
   );
 }
 
-export function SmileyHappy(props: SmileyProps) {
+export function SmileyHappy(props?: SmileyProps) {
   props = { ...defaultSmileyProps, ...props };
   return (
     <Svg width={props.width} height={props.height} viewBox={props.viewBox} style={props.style}>

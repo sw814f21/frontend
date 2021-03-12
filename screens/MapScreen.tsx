@@ -1,21 +1,14 @@
 import * as React from 'react';
-import {StyleSheet, Dimensions, FlatList, Linking} from 'react-native';
+import { StyleSheet, Dimensions, FlatList, Linking } from 'react-native';
 import MapView from 'react-native-maps';
 import { Marker } from "react-native-maps";
-import {Restaurant, SmileyReport} from "../types";
+import { Restaurant, SmileyReport } from "../types";
 
 import { Text, View } from '../components/Themed';
-import { getRestaurants } from "../api/sample_api";
-import {Component} from "react";
-import {FontAwesome} from "@expo/vector-icons";
-import {
-    EliteSmiley,
-    Smiley,
-    SmileyHappy, SmileyNeutral,
-    SmileyOkay,
-    SmileySad,
-} from "../components/Smileys";
-import i18n from "../i18n/i18n";
+import { GetAPI } from "../api/api";
+import { Component } from "react";
+import { FontAwesome } from "@expo/vector-icons";
+import { smileyFromKey } from "../components/Smileys";
 
 
 interface MapScreenProps {
@@ -25,7 +18,8 @@ interface MapScreenProps {
 interface MapScreenState {
     region: Region,
     restaurantScreen: boolean
-    restaurant?: Restaurant
+    restaurant?: Restaurant,
+    markers: Restaurant[]
 }
 
 interface Region {
@@ -40,54 +34,8 @@ interface MapStyle {
     height: number
 }
 
-interface SmileyData {
-    smiley: any,
-    smileyText: string
-}
-
-function smileyFromKey(key: number) : SmileyData {
-    let smiley;
-    let smileyText;
-    let smileyProps = {
-        viewBox: '0 0 97.3333 97.3333',
-    }
-    let eliteSmileyProps = {
-        viewBox: '0 0 188 145.3333',
-    }
-    switch (key) {
-        case Smiley.Elite:
-            smiley = EliteSmiley(eliteSmileyProps);
-            smileyText = i18n.t('smileyText.elite')
-            break;
-        case Smiley.Bad:
-            smiley = SmileySad(smileyProps);
-            smileyText = i18n.t('smileyText.bad')
-            break;
-        case Smiley.Decent:
-            smiley = SmileyOkay(smileyProps);
-            smileyText = i18n.t('smileyText.decent')
-            break;
-        case Smiley.Good:
-            smiley = SmileyHappy(smileyProps);
-            smileyText = i18n.t('smileyText.good')
-            break;
-        case Smiley.Neutral:
-            smiley = SmileyNeutral(smileyProps);
-            smileyText = i18n.t('smileyText.neutral')
-            break;
-        default:
-            smiley = SmileyHappy(smileyProps);
-            smileyText = i18n.t('smileyText.good')
-            break;
-    }
-    return {
-        smiley: smiley,
-        smileyText: smileyText
-    };
-}
-
-function ReportItem({ report }: { report: SmileyReport}) {
-    let smiley: SmileyData = smileyFromKey(report.smiley)
+function ReportItem({ report }: { report: SmileyReport }) {
+    let smiley = smileyFromKey(report.smiley)
 
     return (
         <View
@@ -125,8 +73,17 @@ export default class MapScreen extends Component<MapScreenProps, MapScreenState>
                 longitudeDelta: 6.0695,
             },
             restaurantScreen: false,
-            restaurant: undefined
+            restaurant: undefined,
+            markers: [],
         }
+    }
+
+    componentDidMount() {
+        GetAPI().getRestaurants().then(res => {
+            this.setState({
+                markers: res
+            })
+        })
     }
 
     openRestaurant(obj: Restaurant) {
@@ -144,7 +101,7 @@ export default class MapScreen extends Component<MapScreenProps, MapScreenState>
 
     renderSmileyMarker(obj: Restaurant) {
         return (<Marker
-            coordinate={{latitude: obj.geo_lat, longitude: obj.geo_long}}
+            coordinate={{ latitude: obj.geo_lat, longitude: obj.geo_long }}
             key={obj.id}
             //image={require('../assets/images/favicon.png')}
             onPress={() => this.openRestaurant(obj)}
@@ -158,11 +115,13 @@ export default class MapScreen extends Component<MapScreenProps, MapScreenState>
                 <MapView
                     style={mapStyle}
                     showsUserLocation={true}
-                    initialRegion={ this.state.region }
+                    initialRegion={this.state.region}
                 >
-                    {getRestaurants().restaurants.map((smileyProps: Restaurant) => (
-                        this.renderSmileyMarker(smileyProps)
-                    ))}
+                    {
+                        this.state.markers.map((smileyProps: Restaurant) => (
+                            this.renderSmileyMarker(smileyProps)
+                        ))
+                    }
                 </MapView>
             </View>
         );
@@ -181,7 +140,7 @@ export default class MapScreen extends Component<MapScreenProps, MapScreenState>
                     >
                         <View style={styles.listHeader}>
                             <View style={styles.iconCol}>
-                            <FontAwesome name={'star-o'} color={"#236683"} size={40}/>
+                                <FontAwesome name={'star-o'} color={"#236683"} size={40} />
                             </View>
                             <View style={styles.nameCol}>
                                 <Text style={styles.title}>{this.state.restaurant.name}</Text>
@@ -189,13 +148,13 @@ export default class MapScreen extends Component<MapScreenProps, MapScreenState>
                                 <Text >{this.state.restaurant.zip_code} {this.state.restaurant.city}</Text>
                             </View>
                             <View style={styles.iconCol}>
-                            {smiley.smiley}
+                                {smiley.smiley}
                             </View>
                         </View>
 
                         <FlatList
                             data={this.state.restaurant.reports}
-                            renderItem={( {item} ) => <ReportItem report={item}/>}
+                            renderItem={({ item }) => <ReportItem report={item} />}
                             keyExtractor={(item, _) => item.date.toString()}
                         />
 
