@@ -20,7 +20,8 @@ cd frontend/
 ```
 npm install
 ```
-### 4. Start the app
+
+### 4. Start the app in tunnel mode (For external possibilities)
 ```
-expo start
+expo start --host tunnel
 ```
