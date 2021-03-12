@@ -6,7 +6,8 @@ import { Text, View, TextInput } from '../components/Themed';
 import { SmileyHappy, SmileyNeutral, SmileyOkay, SmileySad } from "../components/Smileys";
 import { Restaurant, Smiley } from "../types";
 import i18n from "../i18n/i18n";
-import { getAllStoredRestaurants } from "../data/data";
+import { GetAPI } from "../api/api";
+import Constants from 'expo-constants';
 
 function Item({ restaurant }: { restaurant: Restaurant }) {
   let currSmiley;
@@ -52,13 +53,14 @@ export default class SearchScreen extends React.Component<{}, SearchState> {
   constructor(props: any) {
     super(props);
     this.state = { restaurants: [], isLoading: false, };
+    console.log(process.env)
+    console.log(Constants.manifest);
   }
 
   updateList() {
     this.setState({ isLoading: true })
-    getAllStoredRestaurants().then((result: any) => {
-      let newrows = result[0].rows;
-      this.setState({ restaurants: newrows, isLoading: false });
+    GetAPI().getRestaurants().then((result: Restaurant[]) => {
+      this.setState({ restaurants: result, isLoading: false });
     });
   }
 

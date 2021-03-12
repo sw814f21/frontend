@@ -1,17 +1,22 @@
-import { Restaurant, Favorite, Notification, SettingItem } from "../types";
+import { Restaurant } from "../types";
+import { FindSmileyAPI } from "./api";
 
-export function getRestaurants(): { restaurants: Restaurant[] } {
-    return require('../sample_data/sample_restaurant.json');
-}
+export class SampleAPI implements FindSmileyAPI {
 
-export function getFavorites(): { favorites: Favorite[] } {
-    return require('../sample_data/sample_favorite.json');
-}
-
-export function getNotifications(): { notifications: Notification[] } {
-    return require('../sample_data/sample_notification.json');
-}
-
-export function getSettings(): { settings: SettingItem[] } {
-    return require('../sample_data/sample_setting.json');
+    private FILENAME = './sample_data/sample_restaurant.json';
+    
+    getRestaurant(id: number): Promise<Restaurant> {
+        return new Promise((resolve, reject) => {
+            let elements: Restaurant[] = require(this.FILENAME);
+            let element = elements.find(element => element.id === id);
+            if (element)
+                return resolve(element);
+            reject('Element not found');
+        })
+    }
+    getRestaurants(): Promise<Restaurant[]> {
+        return new Promise((resolve, _) => {
+            resolve(require(this.FILENAME));
+        });
+    }
 }
