@@ -29,8 +29,8 @@
           "url": "https://www.findsmiley.dk/Sider/KontrolRapport.aspx?Virk1583317"
         }
       ],
-      "geo_lat": "69.000",
-      "geo_long": "420.000"
+      "geo_lat": 57.0489625,
+      "geo_long": 9.9191642
     },
     {
       "id": 1,
@@ -61,8 +61,8 @@
           "url": "https://www.findsmiley.dk/Sider/KontrolRapport.aspx?Virk1583317"
         }
       ],
-      "geo_lat": "69.000",
-      "geo_long": "420.000"
+      "geo_lat": 57.029912,
+      "geo_long": 9.9057733
     },
     {
       "id": 2,
@@ -93,8 +93,8 @@
           "url": "https://www.findsmiley.dk/Sider/KontrolRapport.aspx?Virk1583317"
         }
       ],
-      "geo_lat": "69.000",
-      "geo_long": "420.000"
+      "geo_lat": 57.040193,
+      "geo_long": 9.904378
     },
     {
       "id": 3,
@@ -125,8 +125,8 @@
           "url": "https://www.findsmiley.dk/Sider/KontrolRapport.aspx?Virk1583317"
         }
       ],
-      "geo_lat": "69.000",
-      "geo_long": "420.000"
+      "geo_lat": 57.061482857987954,
+      "geo_long": 9.926773145759206
     },
     {
       "id": 4,
@@ -157,8 +157,8 @@
           "url": "https://www.findsmiley.dk/Sider/KontrolRapport.aspx?Virk1583317"
         }
       ],
-      "geo_lat": "69.000",
-      "geo_long": "420.000"
+      "geo_lat": 57.02866474853851,
+      "geo_long": 9.979528842367472
     },
     {
       "id": 5,
@@ -189,8 +189,8 @@
           "url": "https://www.findsmiley.dk/Sider/KontrolRapport.aspx?Virk1583317"
         }
       ],
-      "geo_lat": "69.000",
-      "geo_long": "420.000"
+      "geo_lat": 57.00861614685169,
+      "geo_long": 9.929605065129422
     },
     {
       "id": 6,
@@ -221,8 +221,8 @@
           "url": "https://www.findsmiley.dk/Sider/KontrolRapport.aspx?Virk1583317"
         }
       ],
-      "geo_lat": "69.000",
-      "geo_long": "420.000"
+      "geo_lat": 57.01594793207691,
+      "geo_long": 9.991203940991475
     },
     {
       "id": 7,
@@ -253,8 +253,8 @@
           "url": "https://www.findsmiley.dk/Sider/KontrolRapport.aspx?Virk1583317"
         }
       ],
-      "geo_lat": "69.000",
-      "geo_long": "420.000"
+      "geo_lat": 57.01986297950897,
+      "geo_long": 9.874798209523309
     }
   ]
 }
