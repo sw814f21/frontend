@@ -9,6 +9,13 @@ const enMessages = {
     search: {
         placeholder: 'Searchword',
     },
+    smileyText: {
+        elite: 'No remarks last four checks',
+        good: 'No remarks',
+        decent: 'Enjoining order',
+        neutral: 'Injunction or prohibitary order',
+        bad: 'Administrative penalties, reported to the police, or approval withdrawn.'
+    }
 }
 
 export default enMessages;

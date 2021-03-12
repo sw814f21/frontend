@@ -9,6 +9,13 @@ const daMessages = {
     search: {
         placeholder: 'Søgeord',
     },
+    smileyText: {
+        elite: 'Ingen anmærkninger sidste 4 tjek',
+        good: 'Ingen anmærkninger',
+        decent: 'Indskærpelse',
+        neutral: 'Påbud, forbud eller tvangsbøder',
+        bad: 'Bødeforlæg, politianmeldelse,  karantæne, autorisation eller registrering frataget'
+    }
 }
 
 export default daMessages;
