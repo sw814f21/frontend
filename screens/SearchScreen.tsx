@@ -3,13 +3,10 @@ import * as React from 'react';
 import { StyleSheet, FlatList, Image } from 'react-native';
 
 import { Text, View, TextInput } from '../components/Themed';
-import { getRestaurants } from "../api/sample_api";
 import { SmileyHappy, SmileyNeutral, SmileyOkay, SmileySad } from "../components/Smileys";
 import { Restaurant, Smiley } from "../types";
 import i18n from "../i18n/i18n";
-
-
-const DATA = getRestaurants()['restaurants'];
+import { getAllStoredRestaurants } from "../data/data";
 
 function Item({ restaurant }: { restaurant: Restaurant }) {
   let currSmiley;
@@ -45,21 +42,46 @@ function Item({ restaurant }: { restaurant: Restaurant }) {
   );
 }
 
-export default function SearchScreen() {
-  const [value, onChangeText] = React.useState("");
-  return (
-    <View style={styles.container}>
-      <View style={styles.search}>
-        <FontAwesome name='search' color='white' size={20} style={styles.icon} />
-        <TextInput placeholder={i18n.t('search.placeholder')} style={styles.flex} />
+interface SearchState {
+  restaurants: Restaurant[],
+  isLoading: boolean
+}
+
+export default class SearchScreen extends React.Component<{}, SearchState> {
+
+  constructor(props: any) {
+    super(props);
+    this.state = { restaurants: [], isLoading: false, };
+  }
+
+  updateList() {
+    this.setState({ isLoading: true })
+    getAllStoredRestaurants().then((result: any) => {
+      let newrows = result[0].rows;
+      console.log(newrows);
+      this.setState({ restaurants: newrows, isLoading: false });
+    });
+  }
+
+  componentDidMount() {
+    this.updateList();
+  }
+
+  render() {
+    return (
+      <View style={styles.container}>
+        <View style={styles.search}>
+          <FontAwesome name='search' color='white' size={20} style={styles.icon} />
+          <TextInput placeholder={i18n.t('search.placeholder')} style={styles.flex} />
+        </View>
+        <FlatList
+          data={this.state.restaurants}
+          renderItem={({ item }) => <Item restaurant={item} />}
+          keyExtractor={(item, _) => item.id.toString()}
+        />
       </View>
-      <FlatList
-        data={DATA}
-        renderItem={({ item }) => <Item restaurant={item} />}
-        keyExtractor={(item, _) => item.id.toString()}
-      />
-    </View>
-  );
+    );
+  }
 }
 
 const styles = StyleSheet.create({
