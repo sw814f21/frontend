@@ -1,35 +1,15 @@
-
 import { FontAwesome } from '@expo/vector-icons';
 import * as React from 'react';
-import { StyleSheet, FlatList, Image } from 'react-native';
+import { StyleSheet, FlatList } from 'react-native';
 
 import { Text, View, TextInput } from '../components/Themed';
-import { SmileyHappy, SmileyNeutral, SmileyOkay, SmileySad } from "../components/Smileys";
-import { Smiley } from "../components/Smileys";
+import { smileyFromKey } from "../components/Smileys";
 import { Restaurant } from "../types";
 import i18n from "../i18n/i18n";
 import { GetAPI } from "../api/api";
-import Constants from 'expo-constants';
 
 function Item({ restaurant }: { restaurant: Restaurant }) {
-  let currSmiley;
-  switch (restaurant.cur_smiley) {
-    case Smiley.Bad:
-      currSmiley = SmileySad;
-      break;
-    case Smiley.Decent:
-      currSmiley = SmileyOkay;
-      break
-    case Smiley.Good:
-      currSmiley = SmileyHappy;
-      break;
-    case Smiley.Neutral:
-      currSmiley = SmileyNeutral;
-      break;
-    default:
-      currSmiley = SmileyHappy;
-      break;
-  }
+  let currSmiley = smileyFromKey(restaurant.cur_smiley).smiley;
   return (
     <View style={styles.listitem}>
       <FontAwesome name='star-o' color='white' size={30} style={styles.icon} />
@@ -55,8 +35,6 @@ export default class SearchScreen extends React.Component<{}, SearchState> {
   constructor(props: any) {
     super(props);
     this.state = { restaurants: [], isLoading: false, };
-    console.log(process.env)
-    console.log(Constants.manifest);
   }
 
   updateList() {
