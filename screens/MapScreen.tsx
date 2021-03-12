@@ -4,7 +4,6 @@ import MapView from 'react-native-maps';
 import { Marker } from "react-native-maps";
 import {Restaurant, SmileyReport} from "../types";
 
-import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 import { getRestaurants } from "../api/sample_api";
 import {Component} from "react";
@@ -17,7 +16,6 @@ import {
     SmileySad,
 } from "../components/Smileys";
 import i18n from "../i18n/i18n";
-import {Link} from "@react-navigation/native";
 
 
 interface MapScreenProps {
