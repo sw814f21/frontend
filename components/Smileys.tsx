@@ -2,8 +2,9 @@ import Svg, { Path, Styles } from 'react-native-svg';
 import * as React from 'react';
 import { Marker } from "react-native-maps";
 import {Restaurant} from "../types";
-import {View} from "react-native";
-import { StyleSheet, Dimensions } from 'react-native';
+import {View, ImageBackground, TouchableHighlight} from "react-native";
+import { StyleSheet, Dimensions, Text } from 'react-native';
+import {FontAwesome} from "@expo/vector-icons";
 
 
 enum Smiley {
@@ -93,42 +94,12 @@ export function SmileyHappy(props: SmileyProps = {
   );
 }
 
-export function SmileyMarker(smileyProps: Restaurant) {
+export function SmileyMarker(obj: Restaurant) {
+
     return (<Marker
-        coordinate={{latitude: smileyProps.geo_lat, longitude: smileyProps.geo_long}}
-        key={smileyProps.id}
-
+        coordinate={{latitude: obj.geo_lat, longitude: obj.geo_long}}
+        key={obj.id}
+        //image={require('../assets/images/favicon.png')}
     >
-        <View
-            style={styles.marker}
-        >
-            {svgFromKey(smileyProps.cur_smiley)}
-        </View>
-
     </Marker>)
 }
-
-export function svgFromKey(key: number) {
-    switch (key) {
-        case Smiley.Elite:
-            return EliteSmiley({})
-        case Smiley.Good:
-            return SmileyHappy({})
-        case Smiley.Decent:
-            return SmileyOkay({})
-        case Smiley.Neutral:
-            return SmileyNeutral({})
-        case Smiley.Bad:
-            return SmileySad({})
-        default:
-            return <Svg/>
-    }
-}
-
-const styles = StyleSheet.create({
-    marker: {
-        width: 50,
-        height: 50,
-        resizeMode: "contain"
-    }
-});
