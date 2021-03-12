@@ -9,11 +9,11 @@ import i18n from "../i18n/i18n";
 import { GetAPI } from "../api/api";
 
 function Item({ restaurant }: { restaurant: Restaurant }) {
-  let currSmiley = smileyFromKey(restaurant.cur_smiley).smiley;
+  let currSmiley = smileyFromKey(restaurant.cur_smiley, { width: '10%' }).smiley;
   return (
     <View style={styles.listitem}>
       <FontAwesome name='star-o' color='white' size={30} style={styles.icon} />
-      {currSmiley({ width: '10%' })}
+      {currSmiley}
       <View>
         <Text style={styles.title}>{restaurant.name}</Text>
         <Text>{restaurant.address}</Text>

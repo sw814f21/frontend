@@ -14,32 +14,32 @@ interface SmileyData {
   smileyText: string
 }
 
-export function smileyFromKey(key: number): SmileyData {
+export function smileyFromKey(key: number, props?: SmileyProps): SmileyData {
   let smiley;
   let smileyText;
   switch (key) {
     case Smiley.Elite:
-      smiley = EliteSmiley();
+      smiley = EliteSmiley(props);
       smileyText = i18n.t('smileyText.elite')
       break;
     case Smiley.Bad:
-      smiley = SmileySad();
+      smiley = SmileySad(props);
       smileyText = i18n.t('smileyText.bad')
       break;
     case Smiley.Decent:
-      smiley = SmileyOkay();
+      smiley = SmileyOkay(props);
       smileyText = i18n.t('smileyText.decent')
       break;
     case Smiley.Good:
-      smiley = SmileyHappy();
+      smiley = SmileyHappy(props);
       smileyText = i18n.t('smileyText.good')
       break;
     case Smiley.Neutral:
-      smiley = SmileyNeutral();
+      smiley = SmileyNeutral(props);
       smileyText = i18n.t('smileyText.neutral')
       break;
     default:
-      smiley = SmileyHappy();
+      smiley = SmileyHappy(props);
       smileyText = i18n.t('smileyText.good')
       break;
   }
