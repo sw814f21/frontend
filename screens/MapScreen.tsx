@@ -9,6 +9,7 @@ import { Text, View } from '../components/Themed';
 import { getRestaurants } from "../api/sample_api";
 import { SmileyMarker } from "../components/Smileys";
 
+
 function getInitialState() {
     return {
         region: {
