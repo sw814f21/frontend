@@ -58,7 +58,6 @@ export default class SearchScreen extends React.Component<{}, SearchState> {
     this.setState({ isLoading: true })
     getAllStoredRestaurants().then((result: any) => {
       let newrows = result[0].rows;
-      console.log(newrows);
       this.setState({ restaurants: newrows, isLoading: false });
     });
   }

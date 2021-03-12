@@ -71,9 +71,6 @@ export function deleteStoredRestaurants(): Promise<unknown> {
   ]
   return new Promise((resolve, reject) => {
     conn.exec(queries, false, (err, result) => {
-      console.log("hej");
-      console.log(err);
-      console.log(result);
       if (err) return reject(err);
       resolve(result);
     });
