@@ -2,7 +2,7 @@ import Svg, { Path, Styles } from 'react-native-svg';
 import * as React from 'react';
 
 
-enum Smiley {
+export enum Smiley {
     Elite = 0,
     Good = 1,
     Decent = 2,

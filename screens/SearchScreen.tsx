@@ -4,7 +4,7 @@ import { StyleSheet, FlatList, Image } from 'react-native';
 import { Text, View, TextInput } from '../components/Themed';
 import { getRestaurants } from "../api/sample_api";
 import { SmileyHappy, SmileyNeutral, SmileyOkay, SmileySad } from "../components/Smileys";
-import { Smiley } from "../types";
+import { Smiley } from "../components/Smileys";
 import i18n from "../i18n/i18n";
 
 
