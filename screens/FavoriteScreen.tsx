@@ -7,6 +7,7 @@ import {Favorite, Notification, NotificationType} from "../types";
 import {smileyFromKey} from "../components/Smileys";
 import i18n from "../i18n/i18n";
 import {FontAwesome} from "@expo/vector-icons";
+import {Component} from "react";
 
 function FavoriteItem({ fave }: { fave: Favorite }) {
     let smiley = smileyFromKey(fave.restaurant.cur_smiley).smiley;
@@ -27,17 +28,19 @@ function FavoriteItem({ fave }: { fave: Favorite }) {
 
 }
 
-export default function FavoriteScreen() {
-    let faves = getFavoriteStoredRestaurants();
-    return (
-        <View style={styles.container}>
-            <FlatList
-                data={faves}
-                renderItem={({item}) => <FavoriteItem fave={item}/>}
-                keyExtractor={(item, _) => item.restaurant.id.toString()}
-            />
-        </View>
-    );
+export default class FavoriteScreen extends Component<any, any> {
+    render() {
+        let faves = getFavoriteStoredRestaurants();
+        return (
+            <View style={styles.container}>
+                <FlatList
+                    data={faves}
+                    renderItem={({item}) => <FavoriteItem fave={item}/>}
+                    keyExtractor={(item, _) => item.restaurant.id.toString()}
+                />
+            </View>
+        );
+    }
 }
 
 const styles = StyleSheet.create({
