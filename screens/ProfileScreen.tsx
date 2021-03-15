@@ -7,6 +7,7 @@ import {smileyFromKey} from "../components/Smileys";
 import i18n from "../i18n/i18n";
 import {FontAwesome} from "@expo/vector-icons";
 import {getAllSettings} from "../data/sample_data";
+import {Component} from "react";
 
 function ProfileItem({ setting }: { setting: SettingItem }) {
     let settingComponent;
@@ -42,17 +43,20 @@ function ProfileItem({ setting }: { setting: SettingItem }) {
 
 }
 
-export default function ProfileScreen() {
-    let settings = getAllSettings();
-    return (
-        <View style={styles.container}>
-            <FlatList
-                data={settings}
-                renderItem={({item}) => <ProfileItem setting={item}/>}
-                keyExtractor={(item, _) => item.id.toString()}
-            />
-        </View>
-    );
+export default class ProfileScreen extends Component<any, any> {
+
+    render() {
+        let settings = getAllSettings();
+        return (
+            <View style={styles.container}>
+                <FlatList
+                    data={settings}
+                    renderItem={({item}) => <ProfileItem setting={item}/>}
+                    keyExtractor={(item, _) => item.id.toString()}
+                />
+            </View>
+        );
+    }
 }
 
 const styles = StyleSheet.create({
