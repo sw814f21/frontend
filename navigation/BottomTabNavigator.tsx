@@ -9,6 +9,7 @@ import TabOneScreen from '../screens/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
 import MapScreen from "../screens/MapScreen";
 import SearchScreen from "../screens/SearchScreen";
+import FavoriteScreen from "../screens/FavoriteScreen";
 
 import { BottomTabParamList, SearchParamList, NotificationParamList, MapParamList,
     FavoriteParamList, ProfileParamList } from '../types';
@@ -126,7 +127,7 @@ function FavoriteNavigator() {
         <FavoriteStack.Navigator>
             <FavoriteStack.Screen
                 name="FavoriteScreen"
-                component={TabTwoScreen}
+                component={FavoriteScreen}
                 options={{ headerTitle: i18n.t('nav.favorite_title') }}
             />
         </FavoriteStack.Navigator>
