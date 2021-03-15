@@ -14,12 +14,25 @@ import { BottomTabParamList, SearchParamList, NotificationParamList, MapParamLis
     FavoriteParamList, ProfileParamList } from '../types';
 
 import i18n from "../i18n/i18n";
+import {useEffect} from "react";
+import {registerForPushNotifications} from "../permissions/permissions";
+import {Notifications} from "expo/build/deprecated.web";
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
 export default function BottomTabNavigator() {
     const colorScheme = useColorScheme();
     Colors[colorScheme].tint = "#236683"
+
+    /*
+    useEffect(() => {
+        // ask for permissions
+        registerForPushNotifications();
+
+        // add listener for notifications
+        Notifications.addListener(notification => {console.log(notification)})
+    }, [])
+     */
 
     return (
         <BottomTab.Navigator
