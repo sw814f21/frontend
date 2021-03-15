@@ -13,7 +13,14 @@ conn.transaction((tx) => {
     cur_smiley INTEGER NOT NULL,
     geo_lat TEXT NOT NULL,
     geo_long TEXT NOT NULL,
-    favorite INTEGER NOT NULL DEFAULT 0 CHECK(is_friend IN (0,1))
+  );`);
+});
+
+conn.transaction((tx) => {
+  tx.executeSql(`CREATE TABLE IF NOT EXISTS favorite(
+    restaurant_id INTEGER NOT NULL,
+    favorite INTEGER NOT NULL DEFAULT 0 CHECK(is_friend IN (0,1)),
+    FOREIGN KEY(restaurant_id) REFERENCES restaurant(id)
   );`);
 });
 
