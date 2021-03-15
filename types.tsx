@@ -74,3 +74,13 @@ export type Notification = {
     date: string;
     new_data: any;
 }
+
+export enum PermissionType {
+    Notifications = 0,
+}
+
+export type Permission = {
+    id: number;
+    type: number;
+    granted: boolean;
+}

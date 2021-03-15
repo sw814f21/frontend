@@ -17,6 +17,14 @@ conn.transaction((tx) => {
   );`);
 });
 
+conn.transaction((tx) => {
+  tx.executeSql(`CREATE TABLE IF NOT EXISTS permissions(
+    id INTEGER NOT NULL PRIMARY KEY,
+    type INTEGER NOT NULL,
+    granted INTEGER NOT NULL DEFAULT 0 CHECK(is_friend IN (0,1))
+  );`);
+});
+
 export function getAllStoredRestaurants(): Promise<unknown> {
   let queries: SQLite.Query[] = [
     {
