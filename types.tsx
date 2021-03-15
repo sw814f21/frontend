@@ -69,8 +69,8 @@ export enum NotificationType {
 }
 
 export type Notification = {
-    restaurant_id: number;
     type: number;  // map to enum NotificationType
     date: string;
     new_data: any;
+    restaurant: Restaurant;
 }
