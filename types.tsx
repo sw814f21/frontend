@@ -63,6 +63,7 @@ export enum SettingType {
 }
 
 export type SettingItem = {
+    id: number;
     name: string;
     description: string;
     type: number;
