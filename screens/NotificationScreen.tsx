@@ -6,6 +6,7 @@ import {getStoredNotifications} from "../data/sample_data";
 import {Notification, NotificationType} from "../types";
 import {smileyFromKey} from "../components/Smileys";
 import i18n from "../i18n/i18n";
+import {Component} from "react";
 
 function NotificationItem({ notif }: { notif: Notification }) {
     let visualItem;
@@ -32,17 +33,20 @@ function NotificationItem({ notif }: { notif: Notification }) {
 
 }
 
-export default function NotificationScreen() {
-    let notifs = getStoredNotifications();
-    return (
-        <View style={styles.container}>
-            <FlatList
-                data={notifs}
-                renderItem={({item}) => <NotificationItem notif={item}/>}
-                keyExtractor={(item, _) => item.id.toString()}
-            />
-        </View>
-    );
+export default class NotificationScreen extends Component<any, any> {
+
+    render() {
+        let notifs = getStoredNotifications();
+        return (
+            <View style={styles.container}>
+                <FlatList
+                    data={notifs}
+                    renderItem={({item}) => <NotificationItem notif={item}/>}
+                    keyExtractor={(item, _) => item.id.toString()}
+                />
+            </View>
+        );
+    }
 }
 
 const styles = StyleSheet.create({
