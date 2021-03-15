@@ -9,6 +9,7 @@ import TabOneScreen from '../screens/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
 import MapScreen from "../screens/MapScreen";
 import SearchScreen from "../screens/SearchScreen";
+import ProfileScreen from "../screens/ProfileScreen";
 
 import { BottomTabParamList, SearchParamList, NotificationParamList, MapParamList,
     FavoriteParamList, ProfileParamList } from '../types';
@@ -140,7 +141,7 @@ function ProfileNavigator() {
         <ProfileStack.Navigator>
             <ProfileStack.Screen
                 name="ProfileScreen"
-                component={TabTwoScreen}
+                component={ProfileScreen}
                 options={{ headerTitle: i18n.t('nav.profile_title') }}
             />
         </ProfileStack.Navigator>
