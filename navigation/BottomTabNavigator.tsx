@@ -9,6 +9,7 @@ import TabOneScreen from '../screens/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
 import MapScreen from "../screens/MapScreen";
 import SearchScreen from "../screens/SearchScreen";
+import NotificationScreen from "../screens/NotificationScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 
 import { BottomTabParamList, SearchParamList, NotificationParamList, MapParamList,
@@ -99,7 +100,7 @@ function NotificationNavigator() {
     <NotificationStack.Navigator>
       <NotificationStack.Screen
         name="NotificationScreen"
-        component={TabTwoScreen}
+        component={NotificationScreen}
         options={{ headerTitle: i18n.t('nav.notifications_title') }}
       />
     </NotificationStack.Navigator>

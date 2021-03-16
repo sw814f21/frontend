@@ -15,6 +15,9 @@ const daMessages = {
         decent: 'Indskærpelse',
         neutral: 'Påbud, forbud eller tvangsbøder',
         bad: 'Bødeforlæg, politianmeldelse,  karantæne, autorisation eller registrering frataget'
+    },
+    notification: {
+        new_smiley: 'har fået ny smiley'
     }
 }
 
