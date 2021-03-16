@@ -57,10 +57,17 @@ export type Favorite = {
     restaurant_id: number;
 }
 
+export enum SettingType {
+    Switch = 0,
+    // ... e.g., number input, text input, etc
+}
+
 export type SettingItem = {
+    id: number;
     name: string;
     description: string;
-    state: any;  // change to bool if we only have slider settings
+    type: number;
+    state: any;  // change to bool if we only have switch settings
 }
 
 export enum NotificationType {
