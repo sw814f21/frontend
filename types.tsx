@@ -54,7 +54,8 @@ export type SmileyReport = {
 }
 
 export type Favorite = {
-    restaurant_id: number;
+    favorite: boolean;
+    restaurant: Restaurant;
 }
 
 export enum SettingType {
