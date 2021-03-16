@@ -15,6 +15,9 @@ const enMessages = {
         decent: 'Enjoining order',
         neutral: 'Injunction or prohibitary order',
         bad: 'Administrative penalties, reported to the police, or approval withdrawn.'
+    },
+    notification: {
+        new_smiley: 'has received a new smiley'
     }
 }
 

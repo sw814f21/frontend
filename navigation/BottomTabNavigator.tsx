@@ -10,6 +10,8 @@ import TabTwoScreen from '../screens/TabTwoScreen';
 import MapScreen from "../screens/MapScreen";
 import SearchScreen from "../screens/SearchScreen";
 import FavoriteScreen from "../screens/FavoriteScreen";
+import NotificationScreen from "../screens/NotificationScreen";
+import ProfileScreen from "../screens/ProfileScreen";
 
 import { BottomTabParamList, SearchParamList, NotificationParamList, MapParamList,
     FavoriteParamList, ProfileParamList } from '../types';
@@ -99,7 +101,7 @@ function NotificationNavigator() {
     <NotificationStack.Navigator>
       <NotificationStack.Screen
         name="NotificationScreen"
-        component={TabTwoScreen}
+        component={NotificationScreen}
         options={{ headerTitle: i18n.t('nav.notifications_title') }}
       />
     </NotificationStack.Navigator>
@@ -141,7 +143,7 @@ function ProfileNavigator() {
         <ProfileStack.Navigator>
             <ProfileStack.Screen
                 name="ProfileScreen"
-                component={TabTwoScreen}
+                component={ProfileScreen}
                 options={{ headerTitle: i18n.t('nav.profile_title') }}
             />
         </ProfileStack.Navigator>
