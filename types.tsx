@@ -84,3 +84,13 @@ export type Permission = {
     type: number;
     granted: boolean;
 }
+
+export type PushNotification = {
+    title: string,
+    body: string,
+    data: PushNotificationData
+}
+
+export type PushNotificationData = {
+    data: string
+}
