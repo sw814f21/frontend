@@ -1,16 +1,50 @@
-import { Notifications } from 'expo';
 import * as Permissions from 'expo-permissions';
+import Constants from 'expo-constants';
+import * as Notifications from 'expo-notifications';
+import {PushNotification, PushNotificationData} from "../types";
+import {Platform} from "react-native";
 
 export const registerForPushNotifications = async () => {
-    try {
-        const permission = await Permissions.askAsync(Permissions.NOTIFICATIONS);
-        if (!permission.granted) return;
-        const token = await Notifications.getExpoPushTokenAsync();
+    let token = '';
+    if (Constants.isDevice) {
+        const { status: curStatus } = await Notifications.getPermissionsAsync();
+        let finalStatus = curStatus;
+
+        if (curStatus !== 'granted') {
+            const { status } = await Notifications.requestPermissionsAsync();
+            finalStatus = status
+        }
+
+        if (finalStatus !== 'granted') {
+            alert('Could not retrieve token for push notifications.')
+            return;
+        }
+
+        token = (await Notifications.getExpoPushTokenAsync()).data;
         console.log(token);
-        return token;
-        // TODO: save token
-    } catch (error) {
-        console.log('Error getting token', error)
+    } else {
+        alert('Can\' retrieve token on virtual device.');
     }
+
+    if (Platform.OS === 'android') {
+        await Notifications.setNotificationChannelAsync('default', {
+            name: 'default',
+            importance: Notifications.AndroidImportance.MAX,
+            vibrationPattern: [0, 250, 250, 250],
+            lightColor: "#BDBDBD"
+        })
+    }
+
+    return token
 }
 
+export async function schedulePushNotification(notif: PushNotification) {
+    await Notifications.scheduleNotificationAsync({
+        content: {
+            title: notif.title,
+            body: notif.body,
+            data: notif.data,
+        },
+        trigger: {seconds: 2}
+    })
+}
