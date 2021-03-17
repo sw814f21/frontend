@@ -22,7 +22,19 @@ A token is on the form `ExponentPushToken[xxxxxxxxxxxxxxxxxxxxxx]`.
 Note that the `ExponentPushToken[]` bit should be included.
 
 ## Scheduling a push notification
+
 [Docs](https://docs.expo.io/push-notifications/sending-notifications/)
+
+Remember to login with an [Expo user](https://expo.io/signup) before trying to send a 
+notification to a physical device while in develop mode, otherwise it will not work.
+
+```shell
+$ expo login
+Username/Email Address: <username>
+Password: hunter2
+
+$ expo start
+```
 
 ### Locally
 See `permissions/permissions.ts -> schedulePushNotification()`.
