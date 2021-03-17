@@ -1,10 +1,12 @@
 import * as React from 'react';
-import { Dimensions, FlatList, StyleSheet, Switch } from 'react-native';
+import { Dimensions, FlatList, StyleSheet, Switch, Button } from 'react-native';
 
 import { Text, View } from '../components/Themed';
 import { SettingItem, SettingType } from "../types";
 import { storageAPI } from "../data/storage";
+import { recreateTables } from "../data/sqlite";
 import { Component } from "react";
+import Constants from "expo-constants";
 
 function ProfileItem({ setting }: { setting: SettingItem }) {
     let settingComponent;
@@ -39,16 +41,29 @@ function ProfileItem({ setting }: { setting: SettingItem }) {
     </View>
 
 }
+function DevTools() {
+    return <View>
+        <Button title='Recreate local database' onPress={recreateTables} />
+        <Button title='Load sample favorites' onPress={test_something} />
+        <Button title='Load sample notifications' onPress={test_something} />
+    </View>
+}
+
+function test_something() {
+    console.log('hello world');
+}
 
 interface ProfileScreenState {
     settings: SettingItem[],
+    devmode: boolean,
 }
 
 export default class ProfileScreen extends Component<any, ProfileScreenState> {
 
     constructor(props: any) {
         super(props);
-        this.state = { settings: [] };
+        let newDevmode = !(Constants.manifest.extra.useSampledata === false);
+        this.state = { settings: [], devmode: newDevmode };
     }
 
     componentDidMount() {
@@ -66,6 +81,7 @@ export default class ProfileScreen extends Component<any, ProfileScreenState> {
                     renderItem={({ item }) => <ProfileItem setting={item} />}
                     keyExtractor={(item, _) => item.id.toString()}
                 />
+                {this.state.devmode && <DevTools></DevTools>}
             </View>
         );
     }
