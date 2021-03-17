@@ -18,7 +18,7 @@ See `permissions/permissions.ts -> registerForPushNotifications()`.
 Due to the nature of these tokens, we may need to store these on the backend and handle notifications there (also makes more sense given that updates are detected on the backend.)
 Although it is also possible to schedule notifications locally.
 
-A token is on the form `ExponentPushToken[VKKcuSGbQtvJHY30kNy4o8]`.
+A token is on the form `ExponentPushToken[xxxxxxxxxxxxxxxxxxxxxx]`.
 Note that the `ExponentPushToken[]` bit should be included.
 
 ## Scheduling a push notification
