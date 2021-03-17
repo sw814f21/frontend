@@ -1,7 +1,6 @@
 # Expo notifications
 
 [Expo API docs](https://docs.expo.io/versions/latest/sdk/notifications/)
-[Rust client for pushing notifs](https://github.com/expo/expo-server-sdk-rust)
 
 For notifications we need some external support which depends on the platform:
 - iOS, *Apple Push Notification* service ([APN](https://developer.apple.com/library/archive/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/APNSOverview.html))
