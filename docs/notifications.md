@@ -2,6 +2,8 @@
 
 [Expo API docs](https://docs.expo.io/versions/latest/sdk/notifications/)
 
+This may be irrelevant; skip to [obtaining expo token](#obtaining-expo-token)
+
 For notifications we need some external support which depends on the platform:
 - iOS, *Apple Push Notification* service ([APN](https://developer.apple.com/library/archive/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/APNSOverview.html))
     - Cloud service, need to register the app
