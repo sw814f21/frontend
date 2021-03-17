@@ -40,6 +40,23 @@ type PushNotificationData = {
 }
 ```
 
+e.g.,
+```typescript
+import {schedulePushNotification} from "../permissions/permissions";
+
+<View
+    onTouchEnd={() => {
+      schedulePushNotification({
+        title: 'hello',
+        body: 'world',
+        data: {data: 'yeet'}
+      }).then(() => {console.log('hi')})
+    }}
+>
+...
+</View>
+```
+
 ### Externally
 
 #### curl
