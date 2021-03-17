@@ -1,12 +1,12 @@
 import * as React from 'react';
-import {Dimensions, FlatList, StyleSheet} from 'react-native';
+import { Dimensions, FlatList, StyleSheet } from 'react-native';
 
 import { Text, View } from '../components/Themed';
-import {getStoredNotifications} from "../data/sample_data";
-import {Notification, NotificationType} from "../types";
-import {smileyFromKey} from "../components/Smileys";
+import { storageAPI } from "../data/storage";
+import { Notification, NotificationType } from "../types";
+import { smileyFromKey } from "../components/Smileys";
 import i18n from "../i18n/i18n";
-import {Component} from "react";
+import { Component } from "react";
 
 function NotificationItem({ notif }: { notif: Notification }) {
     let visualItem;
@@ -33,15 +33,31 @@ function NotificationItem({ notif }: { notif: Notification }) {
 
 }
 
-export default class NotificationScreen extends Component<any, any> {
+interface NotificationScreenState {
+    notifications: Notification[]
+}
+
+export default class NotificationScreen extends Component<any, NotificationScreenState> {
+
+    constructor(props: any) {
+        super(props);
+        this.state = { notifications: [] };
+    }
+
+    componentDidMount() {
+        storageAPI().functiongetStoredNotifications().then(res => {
+            this.setState({
+                notifications: res
+            })
+        });
+    }
 
     render() {
-        let notifs = getStoredNotifications();
         return (
             <View style={styles.container}>
                 <FlatList
-                    data={notifs}
-                    renderItem={({item}) => <NotificationItem notif={item}/>}
+                    data={this.state.notifications}
+                    renderItem={({ item }) => <NotificationItem notif={item} />}
                     keyExtractor={(item, _) => item.id.toString()}
                 />
             </View>

@@ -1,16 +1,15 @@
+import { FontAwesome } from "@expo/vector-icons";
 import * as React from 'react';
-import {Dimensions, FlatList, StyleSheet} from 'react-native';
-
+import { Component } from "react";
+import { Dimensions, FlatList, StyleSheet } from 'react-native';
+import { smileyFromKey } from "../components/Smileys";
 import { Text, View } from '../components/Themed';
-import {getFavoriteStoredRestaurants} from "../data/sample_data";
-import {Favorite, Notification, NotificationType} from "../types";
-import {smileyFromKey} from "../components/Smileys";
-import i18n from "../i18n/i18n";
-import {FontAwesome} from "@expo/vector-icons";
-import {Component} from "react";
+import { storageAPI } from "../data/storage";
+import { Restaurant } from "../types";
 
-function FavoriteItem({ fave }: { fave: Favorite }) {
-    let smiley = smileyFromKey(fave.restaurant.cur_smiley).smiley;
+
+function FavoriteItem({ fave }: { fave: Restaurant }) {
+    let smiley = smileyFromKey(fave.cur_smiley).smiley;
 
     return <View
         style={styles.listItem}
@@ -20,23 +19,39 @@ function FavoriteItem({ fave }: { fave: Favorite }) {
         </View>
         <View style={styles.iconCol}>{smiley}</View>
         <View style={styles.textCol}>
-            <Text style={styles.restaurantName}>{fave.restaurant.name}</Text>
-            <Text style={styles.restaurantAddress}>{fave.restaurant.address}, {fave.restaurant.zip_code} {fave.restaurant.city}</Text>
+            <Text style={styles.restaurantName}>{fave.name}</Text>
+            <Text style={styles.restaurantAddress}>{fave.address}, {fave.zip_code} {fave.city}</Text>
         </View>
         <Text>6.1km</Text>
     </View>
 
 }
 
-export default class FavoriteScreen extends Component<any, any> {
+interface FavoriteScreenState {
+    favorites: Restaurant[],
+}
+
+export default class FavoriteScreen extends Component<any, FavoriteScreenState> {
+    constructor(props: any) {
+        super(props);
+        this.state = { favorites: [], }
+    }
+
+    componentDidMount() {
+        storageAPI().getFavoriteStoredRestaurants().then(res => {
+            this.setState({
+                favorites: res
+            })
+        })
+    }
+
     render() {
-        let faves = getFavoriteStoredRestaurants();
         return (
             <View style={styles.container}>
                 <FlatList
-                    data={faves}
-                    renderItem={({item}) => <FavoriteItem fave={item}/>}
-                    keyExtractor={(item, _) => item.restaurant.id.toString()}
+                    data={this.state.favorites}
+                    renderItem={({ item }) => <FavoriteItem fave={item} />}
+                    keyExtractor={(item, _) => item.id.toString()}
                 />
             </View>
         );

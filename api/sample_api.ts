@@ -1,13 +1,13 @@
 import { Restaurant } from "../types";
 import { FindSmileyAPI } from "./api";
-import restaurants from './sample_data/sample_restaurant.json';
 
 export class SampleAPI implements FindSmileyAPI {
 
-    
+
     getRestaurant(id: number): Promise<Restaurant> {
         return new Promise((resolve, reject) => {
-            let elements: Restaurant[] = restaurants;
+
+            let elements: Restaurant[] = require('./sample_data/sample_restaurant.json');
             let element = elements.find(element => element.id === id);
             if (element)
                 return resolve(element);
@@ -16,7 +16,7 @@ export class SampleAPI implements FindSmileyAPI {
     }
     getRestaurants(): Promise<Restaurant[]> {
         return new Promise((resolve, _) => {
-            resolve(restaurants);
+            resolve(require('./sample_data/sample_restaurant.json'));
         });
     }
 }
