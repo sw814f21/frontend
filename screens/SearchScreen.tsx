@@ -6,7 +6,7 @@ import { Text, View, TextInput } from '../components/Themed';
 import { smileyFromKey } from "../components/Smileys";
 import { Restaurant } from "../types";
 import i18n from "../i18n/i18n";
-import { GetAPI } from "../api/api";
+import { DataAPI } from "../api/api";
 
 function Item({ restaurant }: { restaurant: Restaurant }) {
   let currSmiley = smileyFromKey(restaurant.cur_smiley, { width: '10%' }).smiley;
@@ -39,7 +39,7 @@ export default class SearchScreen extends React.Component<{}, SearchState> {
 
   updateList() {
     this.setState({ isLoading: true })
-    GetAPI().getRestaurants().then((result: Restaurant[]) => {
+    DataAPI().getRestaurants().then((result: Restaurant[]) => {
       this.setState({ restaurants: result, isLoading: false });
     });
   }

@@ -1,13 +1,12 @@
 import * as React from 'react';
-import {Dimensions, FlatList, StyleSheet, Switch} from 'react-native';
+import { Dimensions, FlatList, StyleSheet, Switch, Button } from 'react-native';
 
 import { Text, View } from '../components/Themed';
-import {SettingItem, SettingType} from "../types";
-import {smileyFromKey} from "../components/Smileys";
-import i18n from "../i18n/i18n";
-import {FontAwesome} from "@expo/vector-icons";
-import {getAllSettings} from "../data/sample_data";
-import {Component} from "react";
+import { SettingItem, SettingType } from "../types";
+import { storageAPI } from "../data/storage";
+import { recreateTables } from "../data/sqlite";
+import { Component } from "react";
+import Constants from "expo-constants";
 
 function ProfileItem({ setting }: { setting: SettingItem }) {
     let settingComponent;
@@ -15,17 +14,17 @@ function ProfileItem({ setting }: { setting: SettingItem }) {
     switch (setting.type) {
         case SettingType.Switch:
             settingComponent = <Switch
-                    trackColor={ {false: "#BDBDBD", true: "#236683"} }
-                    thumbColor={"white"}
-                    onValueChange={() => {}} // change setting state
-                    value={setting.state}
-                />
+                trackColor={{ false: "#BDBDBD", true: "#236683" }}
+                thumbColor={"white"}
+                onValueChange={() => { }} // change setting state
+                value={setting.state}
+            />
             break;
         default:
             settingComponent = <Switch
-                trackColor={ {false: "#BDBDBD", true: "#236683"} }
+                trackColor={{ false: "#BDBDBD", true: "#236683" }}
                 thumbColor={"white"}
-                onValueChange={() => {}}
+                onValueChange={() => { }}
                 value={setting.state}
             />
             break;
@@ -42,18 +41,47 @@ function ProfileItem({ setting }: { setting: SettingItem }) {
     </View>
 
 }
+function DevTools() {
+    return <View>
+        <Button title='Recreate local database' onPress={recreateTables} />
+        <Button title='Load sample favorites' onPress={test_something} />
+        <Button title='Load sample notifications' onPress={test_something} />
+    </View>
+}
 
-export default class ProfileScreen extends Component<any, any> {
+function test_something() {
+    console.log('hello world');
+}
+
+interface ProfileScreenState {
+    settings: SettingItem[],
+    devmode: boolean,
+}
+
+export default class ProfileScreen extends Component<any, ProfileScreenState> {
+
+    constructor(props: any) {
+        super(props);
+        let newDevmode = !(Constants.manifest.extra.useSampledata === false);
+        this.state = { settings: [], devmode: newDevmode };
+    }
+
+    componentDidMount() {
+        storageAPI().getAllSettings().then(res => {
+            this.setState({ settings: res });
+        })
+    }
 
     render() {
-        let settings = getAllSettings();
+
         return (
             <View style={styles.container}>
                 <FlatList
-                    data={settings}
-                    renderItem={({item}) => <ProfileItem setting={item}/>}
+                    data={this.state.settings}
+                    renderItem={({ item }) => <ProfileItem setting={item} />}
                     keyExtractor={(item, _) => item.id.toString()}
                 />
+                {this.state.devmode && <DevTools></DevTools>}
             </View>
         );
     }

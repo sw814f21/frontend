@@ -5,7 +5,7 @@ import { Marker } from "react-native-maps";
 import { Restaurant, SmileyReport } from "../types";
 
 import { Text, View } from '../components/Themed';
-import { GetAPI } from "../api/api";
+import { DataAPI } from "../api/api";
 import { Component } from "react";
 import { FontAwesome } from "@expo/vector-icons";
 import { smileyFromKey } from "../components/Smileys";
@@ -79,7 +79,7 @@ export default class MapScreen extends Component<MapScreenProps, MapScreenState>
     }
 
     componentDidMount() {
-        GetAPI().getRestaurants().then(res => {
+        DataAPI().getRestaurants().then(res => {
             this.setState({
                 markers: res
             })
