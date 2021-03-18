@@ -30,8 +30,6 @@ export default function App() {
     // ask for permissions
     registerForPushNotifications().then((token: any) => setExpoPushToken(token));
 
-    console.log(expoPushToken);
-
     notificationListener.current = Notifications.addNotificationReceivedListener((notification: any) => {
       setNotification(notification)
     })

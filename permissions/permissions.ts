@@ -29,7 +29,7 @@ export const registerForPushNotifications = async () => {
         token = (await Notifications.getExpoPushTokenAsync()).data;
         console.log(token);
     } else {
-        alert('Can\' retrieve token on virtual device.');
+        alert('Can\'t retrieve token on virtual device.');
     }
 
     if (Platform.OS === 'android') {
