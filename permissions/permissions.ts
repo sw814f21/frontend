@@ -11,7 +11,13 @@ export const registerForPushNotifications = async () => {
         let finalStatus = curStatus;
 
         if (curStatus !== 'granted') {
-            const { status } = await Notifications.requestPermissionsAsync();
+            const { status } = await Notifications.requestPermissionsAsync({
+                // https://docs.expo.io/versions/latest/sdk/notifications/#arguments-8
+                ios: {
+                    allowAlert: true,
+                    allowBadge: true,
+                }
+            });
             finalStatus = status
         }
 
