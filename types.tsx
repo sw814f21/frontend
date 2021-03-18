@@ -83,3 +83,23 @@ export type Notification = {
     new_data: any;
     restaurant: Restaurant;
 }
+
+export enum PermissionType {
+    Notifications = 0,
+}
+
+export type Permission = {
+    id: number;
+    type: number;
+    granted: boolean;
+}
+
+export type PushNotification = {
+    title: string,
+    body: string,
+    data: PushNotificationData
+}
+
+export type PushNotificationData = {
+    data: string
+}
