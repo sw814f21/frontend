@@ -9,6 +9,7 @@ function createTables() {
     tx.executeSql(`CREATE TABLE IF NOT EXISTS restaurant(
       id INTEGER NOT NULL PRIMARY KEY,
       name TEXT NOT NULL,
+      favorite INTEGER NOT NULL DEFAULT 0 CHECK(favorite IN (0,1))
       address TEXT NOT NULL,
       zip_code NUMERIC NOT NULL,
       city TEXT NOT NULL,
@@ -16,11 +17,12 @@ function createTables() {
       geo_lat TEXT NOT NULL,
       geo_long TEXT NOT NULL
       );`);
-    tx.executeSql(`CREATE TABLE IF NOT EXISTS favorite(
-      restaurant_id INTEGER NOT NULL,
-      favorite INTEGER NOT NULL DEFAULT 0 CHECK(favorite IN (0,1)),
-      FOREIGN KEY(restaurant_id) REFERENCES restaurant(id)
-      );`);
+    tx.executeSql(`CREATE TABLE IF NOT EXISTS notification(
+      id INTEGER NOT NULL PRIMARY KEY,
+      type INTEGER NOT NULL,
+      date TEXT NOT NULL
+      
+    );`)
   });
 }
 
@@ -28,6 +30,7 @@ export function recreateTables() {
   conn.transaction((tx) => {
     tx.executeSql(`DROP TABLE restaurant;`)
     tx.executeSql(`DROP TABLE favorite;`)
+    tx.executeSql(`DROP TABLE notification;`)
   });
   createTables();
 }
