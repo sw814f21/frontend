@@ -9,11 +9,15 @@ export interface FindSmileyStorage {
   functiongetStoredNotifications(): Promise<Notification[]>;
 
   getAllSettings(): Promise<SettingItem[]>;
+  storeSettings(settings: SettingItem[]): Promise<void>;
 }
 
 const sample_storage = new SampleStorage();
 const data = new RealData();
 
-export function storageAPI() {
+export function storageAPI(useProd?: boolean) {
+  if(useProd === true) {
+    return data;
+  }
   return Constants.manifest.extra.useSampledata === false ? data : sample_storage;
 }

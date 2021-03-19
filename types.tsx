@@ -65,9 +65,9 @@ export enum SettingType {
 
 export type SettingItem = {
     id: number;
-    name: string;
-    description: string;
-    type: number;
+    name?: string;
+    description?: string;
+    type?: number;
     state: any;  // change to bool if we only have switch settings
 }
 
