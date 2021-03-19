@@ -4,7 +4,7 @@ import { Dimensions, FlatList, StyleSheet, Switch, Button } from 'react-native';
 import { Text, View } from '../components/Themed';
 import { SettingItem, SettingType } from "../types";
 import { storageAPI } from "../data/storage";
-import { recreateTables } from "../data/sqlite";
+import {recreateTables, insertRestaurants, getFavoriteStoredRestaurants} from "../data/sqlite";
 import { Component } from "react";
 import Constants from "expo-constants";
 
@@ -44,13 +44,18 @@ function ProfileItem({ setting }: { setting: SettingItem }) {
 function DevTools() {
     return <View>
         <Button title='Recreate local database' onPress={recreateTables} />
-        <Button title='Load sample favorites' onPress={test_something} />
+        <Button title='Load sample favorites' onPress={loadFavorites} />
         <Button title='Load sample notifications' onPress={test_something} />
     </View>
 }
 
 function test_something() {
     console.log('hello world');
+}
+
+function loadFavorites() {
+    const restaurants = require('../data/sample_data/sample_favorite.json');
+    insertRestaurants(restaurants);
 }
 
 interface ProfileScreenState {

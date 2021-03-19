@@ -96,13 +96,20 @@ export function deleteStoredRestaurants(): Promise<unknown> {
 }
 
 export function insertRestaurants(restaurants: Restaurant[]) {
-  let query = "INSERT INTO restaurant (id, name, address, zip_code, city, cur_smiley, geo_lat, geo_long) values (?, ?, ?, ?, ?, ?, ?, ?)";
+  let query = "INSERT INTO restaurant (id, name, favorite, address, zip_code, city, cur_smiley," +
+      " geo_lat, geo_long) values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
   let args = [];
   conn.transaction((tx) => {
     for (const res of restaurants) {
+      let fave;
+
+      if (typeof res.favorite === 'undefined') fave = 0;
+      else fave = res.favorite ? 1 : 0;
+
       args = [
         res.id,
         res.name,
+        fave,
         res.address,
         res.zip_code,
         res.city,
