@@ -45,6 +45,7 @@ export type Restaurant = {
     reports: SmileyReport[];
     geo_lat: number;
     geo_long: number;
+    favorite: boolean;
 }
 
 export type SmileyReport = {
