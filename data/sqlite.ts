@@ -65,7 +65,25 @@ export function getFavoriteStoredRestaurants(): Promise<Restaurant[]> {
   });
 }
 
-export function toggleFavoriteStoredRestaurants(id: number): Promise<unknown> {
+export function getSingleFavoriteRestaurant(id: number): Promise<Restaurant> {
+  let queries: SQLite.Query[] = [
+    {
+      sql: "SELECT id, name, address, zip_code, city, cur_smiley, geo_lat, geo_long, favorite" +
+          " FROM restaurant WHERE favorite = 1 AND id = ?",
+      args: [id]
+    }
+  ]
+
+  return new Promise((resolve, reject) => {
+    conn.exec(queries, true, (err, result) => {
+      if (err) return reject(err);
+      let res = (result as SQLite.ResultSet[])[0].rows[0] as Restaurant
+      resolve(res)
+    })
+  })
+}
+
+export function toggleFavoriteStoredRestaurant(id: number): Promise<unknown> {
   let queries: SQLite.Query[] = [
     {
       sql: "UPDATE restaurant SET favorite = ((favorite | 1) - (favorite & 1)) WHERE id = ?",

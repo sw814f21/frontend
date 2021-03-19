@@ -9,7 +9,7 @@ export class SampleStorage implements FindSmileyStorage {
             resolve(require('./sample_data/sample_favorite.json'));
         });
     }
-    functiongetStoredNotifications(): Promise<Notification[]> {
+    getStoredNotifications(): Promise<Notification[]> {
         return new Promise((resolve, _) => {
             console.log('got notifications');
             resolve(require('./sample_data/sample_notification.json'));
@@ -20,5 +20,11 @@ export class SampleStorage implements FindSmileyStorage {
             console.log('got settings');
             resolve(require('./sample_data/sample_setting.json'));
         });
+    }
+    getSingleFavoriteRestaurant(id: number): Promise<Restaurant> {
+        throw new Error("Method not implemented")
+    }
+    toggleFavoriteStoredRestaurant(id: number): Promise<unknown> {
+        throw new Error("Method not implemented")
     }
 }

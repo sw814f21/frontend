@@ -6,9 +6,13 @@ import { SampleStorage } from "./sample_data";
 export interface FindSmileyStorage {
   getFavoriteStoredRestaurants(): Promise<Restaurant[]>;
 
-  functiongetStoredNotifications(): Promise<Notification[]>;
+  getStoredNotifications(): Promise<Notification[]>;
 
   getAllSettings(): Promise<SettingItem[]>;
+
+  getSingleFavoriteRestaurant(id: number): Promise<Restaurant>;
+
+  toggleFavoriteStoredRestaurant(id: number): Promise<unknown>;
 }
 
 const sample_storage = new SampleStorage();
