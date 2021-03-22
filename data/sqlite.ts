@@ -9,7 +9,7 @@ function createTables() {
     tx.executeSql(`CREATE TABLE IF NOT EXISTS restaurant(
       id INTEGER NOT NULL PRIMARY KEY,
       name TEXT NOT NULL,
-      favorite INTEGER NOT NULL DEFAULT 0 CHECK(favorite IN (0,1))
+      favorite INTEGER NOT NULL DEFAULT 0 CHECK(favorite IN (0,1)),
       address TEXT NOT NULL,
       zip_code NUMERIC NOT NULL,
       city TEXT NOT NULL,
