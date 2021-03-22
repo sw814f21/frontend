@@ -21,4 +21,7 @@ export class RealData implements FindSmileyStorage {
   toggleFavoriteStoredRestaurant(id: number): Promise<unknown> {
     return SQLite.toggleFavoriteStoredRestaurant(id)
   }
+  insertRestaurants(restaurants: Restaurant[]) {
+    SQLite.insertRestaurants(restaurants);
+  }
 }

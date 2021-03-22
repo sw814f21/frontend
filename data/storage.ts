@@ -15,6 +15,8 @@ export interface FindSmileyStorage {
   toggleFavoriteStoredRestaurant(id: number): Promise<unknown>;
 
   storeSettings(settings: SettingItem[]): Promise<void>;
+
+  insertRestaurants(restaurants: Restaurant[]): any;
 }
 
 const sample_storage = new SampleStorage();

@@ -151,6 +151,7 @@ export function insertRestaurants(restaurants: Restaurant[]) {
   conn.transaction((tx) => {
     for (const res of restaurants) {
       let fave;
+      console.log('hi')
 
       if (typeof res.favorite === 'undefined') fave = 0;
       else fave = res.favorite ? 1 : 0;
@@ -168,7 +169,7 @@ export function insertRestaurants(restaurants: Restaurant[]) {
       ]
       tx.executeSql(query, args);
     }
-  });
+  }, console.log);
 }
 
 createTables();

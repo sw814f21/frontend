@@ -30,4 +30,7 @@ export class SampleStorage implements FindSmileyStorage {
     toggleFavoriteStoredRestaurant(id: number): Promise<unknown> {
         throw new Error("Method not implemented")
     }
+    insertRestaurants(restaurants: Restaurant[]) {
+        throw new Error("Method not implemented")
+    }
 }
