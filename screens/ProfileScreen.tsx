@@ -46,6 +46,7 @@ function DevTools() {
         <Button title='Recreate local database' onPress={recreateTables} />
         <Button title='Load sample favorites' onPress={loadFavorites} />
         <Button title='Load sample notifications' onPress={test_something} />
+        <Button title={'Print restaurants'} onPress={() => storageAPI().getFavoriteStoredRestaurants().then(res => console.log(res))} />
     </View>
 }
 
