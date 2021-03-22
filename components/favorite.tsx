@@ -16,7 +16,6 @@ export default class FavoriteStar extends Component<FavoriteStarProps, FavoriteS
     constructor(props: any) {
         super(props);
         this.state = { restaurant: props.restaurant }
-        console.log(this.state.restaurant)
     }
 
     render() {

@@ -169,7 +169,7 @@ export function insertRestaurants(restaurants: Restaurant[]) {
       ]
       tx.executeSql(query, args);
     }
-  }, console.log);
+  });
 }
 
 createTables();
