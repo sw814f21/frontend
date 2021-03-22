@@ -85,7 +85,7 @@ function test_something() {
 
 function loadFavorites() {
     const restaurants = require('../data/sample_data/sample_favorite.json');
-    insertRestaurants(restaurants);
+    storageAPI().insertRestaurants(restaurants);
 }
 
 interface ProfileScreenState {
