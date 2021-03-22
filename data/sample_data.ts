@@ -2,6 +2,9 @@ import { Notification, Restaurant, SettingItem } from "../types";
 import { FindSmileyStorage } from "./storage";
 
 export class SampleStorage implements FindSmileyStorage {
+    storeSettings(settings: SettingItem[]): Promise<void> {
+        throw new Error("Method not implemented.");
+    }
 
     getFavoriteStoredRestaurants(): Promise<Restaurant[]> {
         return new Promise((resolve, _) => {

@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "test",
-    "slug": "test",
+    "name": "FindSmiley",
+    "slug": "find-smiley",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",

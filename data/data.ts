@@ -1,25 +1,24 @@
 import { Notification, Restaurant, SettingItem } from "../types";
-import {
-  getFavoriteStoredRestaurants,
-  getSingleFavoriteRestaurant,
-  toggleFavoriteStoredRestaurant
-} from "./sqlite";
+import * as SQLite from "./sqlite";
 import { FindSmileyStorage } from "./storage";
 
 export class RealData implements FindSmileyStorage {
   getFavoriteStoredRestaurants(): Promise<Restaurant[]> {
-    return getFavoriteStoredRestaurants();
+    return SQLite.getFavoriteStoredRestaurants();
   }
   getStoredNotifications(): Promise<Notification[]> {
     throw new Error("Method not implemented.");
   }
   getAllSettings(): Promise<SettingItem[]> {
-    throw new Error("Method not implemented.");
+    return SQLite.getStoredSettings();
+  }
+  storeSettings(settings: SettingItem[]): Promise<void> {
+    return SQLite.storeSettings(settings);
   }
   getSingleFavoriteRestaurant(id: number): Promise<Restaurant> {
-    return getSingleFavoriteRestaurant(id)
+    return SQLite.getSingleFavoriteRestaurant(id)
   }
   toggleFavoriteStoredRestaurant(id: number): Promise<unknown> {
-    return toggleFavoriteStoredRestaurant(id)
+    return SQLite.toggleFavoriteStoredRestaurant(id)
   }
 }

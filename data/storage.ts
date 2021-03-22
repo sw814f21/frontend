@@ -13,11 +13,16 @@ export interface FindSmileyStorage {
   getSingleFavoriteRestaurant(id: number): Promise<Restaurant>;
 
   toggleFavoriteStoredRestaurant(id: number): Promise<unknown>;
+
+  storeSettings(settings: SettingItem[]): Promise<void>;
 }
 
 const sample_storage = new SampleStorage();
 const data = new RealData();
 
-export function storageAPI() {
+export function storageAPI(useProd?: boolean) {
+  if(useProd === true) {
+    return data;
+  }
   return Constants.manifest.extra.useSampledata === false ? data : sample_storage;
 }
