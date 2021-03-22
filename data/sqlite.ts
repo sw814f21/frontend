@@ -9,7 +9,7 @@ function createTables() {
     tx.executeSql(`CREATE TABLE IF NOT EXISTS restaurant(
       id INTEGER NOT NULL PRIMARY KEY,
       name TEXT NOT NULL,
-      favorite INTEGER NOT NULL DEFAULT 0 CHECK(favorite IN (0,1))
+      favorite INTEGER NOT NULL DEFAULT 0 CHECK(favorite IN (0,1)),
       address TEXT NOT NULL,
       zip_code NUMERIC NOT NULL,
       city TEXT NOT NULL,
@@ -114,13 +114,20 @@ export function deleteStoredRestaurants(): Promise<unknown> {
 }
 
 export function insertRestaurants(restaurants: Restaurant[]) {
-  let query = "INSERT INTO restaurant (id, name, address, zip_code, city, cur_smiley, geo_lat, geo_long) values (?, ?, ?, ?, ?, ?, ?, ?)";
+  let query = "INSERT INTO restaurant (id, name, favorite, address, zip_code, city, cur_smiley," +
+      " geo_lat, geo_long) values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
   let args = [];
   conn.transaction((tx) => {
     for (const res of restaurants) {
+      let fave;
+
+      if (typeof res.favorite === 'undefined') fave = 0;
+      else fave = res.favorite ? 1 : 0;
+
       args = [
         res.id,
         res.name,
+        fave,
         res.address,
         res.zip_code,
         res.city,
