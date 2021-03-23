@@ -48,6 +48,12 @@ export type Restaurant = {
     favorite?: boolean;
 }
 
+export type SparseRestaurant = {
+  id: number;
+  lat: number;
+  lng: number;
+}
+
 export type SmileyReport = {
     smiley: number;
     date: string;

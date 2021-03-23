@@ -23,7 +23,7 @@ const sample_storage = new SampleStorage();
 const data = new RealData();
 
 export function storageAPI(useProd?: boolean) {
-  if(useProd === true) {
+  if (useProd === true) {
     return data;
   }
   return Constants.manifest.extra.useSampledata === false ? data : sample_storage;
