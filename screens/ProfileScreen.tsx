@@ -7,6 +7,7 @@ import { storageAPI } from "../data/storage";
 import { recreateTables } from "../data/sqlite";
 import { Component } from "react";
 import Constants from "expo-constants";
+import {schedulePushNotification} from "../permissions/permissions";
 
 function ProfileItem({ setting }: { setting: SettingItem }) {
     let settingComponent;
@@ -46,11 +47,20 @@ function DevTools() {
         <Button title='Recreate local database' onPress={recreateTables} />
         <Button title='Load sample favorites' onPress={test_something} />
         <Button title='Load sample notifications' onPress={test_something} />
+        <Button title={'Test notification'} onPress={testNotification} />
     </View>
 }
 
 function test_something() {
     console.log('hello world');
+}
+
+function testNotification() {
+    schedulePushNotification({
+        title: 'hello',
+        body: 'world',
+        data: {data: 'yeet'}
+    }).then(() => {console.log('hi')})
 }
 
 interface ProfileScreenState {
