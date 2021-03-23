@@ -1,4 +1,3 @@
-import { FontAwesome } from "@expo/vector-icons";
 import * as React from 'react';
 import { Component } from "react";
 import { Dimensions, FlatList, StyleSheet } from 'react-native';
@@ -6,6 +5,7 @@ import { smileyFromKey } from "../components/Smileys";
 import { Text, View } from '../components/Themed';
 import { storageAPI } from "../data/storage";
 import { Restaurant } from "../types";
+import FavoriteStar from "../components/favorite";
 
 
 function FavoriteItem({ fave }: { fave: Restaurant }) {
@@ -15,7 +15,7 @@ function FavoriteItem({ fave }: { fave: Restaurant }) {
         style={styles.listItem}
     >
         <View style={styles.iconCol}>
-            <FontAwesome name='star' color='#236683' size={30} />
+            <FavoriteStar restaurant={fave} />
         </View>
         <View style={styles.iconCol}>{smiley}</View>
         <View style={styles.textCol}>
