@@ -7,6 +7,7 @@ import { storageAPI } from "../data/storage";
 import {recreateTables, insertRestaurants, getFavoriteStoredRestaurants} from "../data/sqlite";
 import { Component } from "react";
 import Constants from "expo-constants";
+import {schedulePushNotification} from "../permissions/permissions";
 
 const DEFAULT_SETTINGS: SettingItem[] = [
     {
@@ -76,6 +77,7 @@ function DevTools() {
         <Button title='Load sample favorites' onPress={loadFavorites} />
         <Button title='Load sample notifications' onPress={test_something} />
         <Button title={'Print restaurants'} onPress={() => storageAPI().getFavoriteStoredRestaurants().then(res => console.log(res))} />
+        <Button title={'Test notification'} onPress={testNotification} />
     </View>
 }
 
@@ -83,9 +85,18 @@ function test_something() {
     console.log('hello world');
 }
 
+
 function loadFavorites() {
     const restaurants = require('../data/sample_data/sample_favorite.json');
     storageAPI().insertRestaurants(restaurants);
+}
+
+function testNotification() {
+    schedulePushNotification({
+        title: 'hello',
+        body: 'world',
+        data: {data: 'yeet'}
+    }).then(() => {console.log('hi')})
 }
 
 interface ProfileScreenState {
