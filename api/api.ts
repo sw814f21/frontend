@@ -49,6 +49,9 @@ export interface FindSmileyAPI {
 const httpapi = new HTTPAPI();
 const sampleapi = new SampleAPI();
 
-export function DataAPI(): FindSmileyAPI {
+export function DataAPI(useProd: boolean): FindSmileyAPI {
+  if (useProd === true) {
+    return httpapi;
+  }
   return Constants.manifest.extra.useSampledata === false ? httpapi : sampleapi;
 }
