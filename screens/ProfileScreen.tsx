@@ -54,6 +54,8 @@ class ProfileItem extends Component<any, ProfileItemState> {
         copy.state = newvalue;
         storageAPI(true).storeSettings([copy]).then(() => {
             this.setState({ setting: copy });
+        }).catch(() => {
+            //Do nothing 
         });
     }
 
