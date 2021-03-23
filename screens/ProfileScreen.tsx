@@ -89,7 +89,7 @@ function test_something() {
 
 
 function loadFavorites() {
-    const restaurants = require('../data/sample_data/sample_favorite.json');
+    const restaurants = require('../data/sample/sample_favorite.json');
     storageAPI().insertRestaurants(restaurants);
 }
 

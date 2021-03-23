@@ -17,11 +17,10 @@ function delay<T>(timeout: number, value: T): Promise<T> {
  */
 export class SampleAPI implements FindSmileyAPI {
 
-
     getRestaurant(id: number): Promise<Restaurant> {
         return new Promise((resolve, reject) => {
 
-            let elements: Restaurant[] = require('./sample_data/sample_restaurant.json');
+            let elements: Restaurant[] = require('./sample/sample_restaurant.json');
             let element = elements.find(element => element.id === id);
             if (element)
                 return resolve(element);
@@ -29,14 +28,14 @@ export class SampleAPI implements FindSmileyAPI {
         })
     }
     getSparseRestaurants(): Promise<SparseRestaurant[]> {
-        return delay<SparseRestaurant[]>(250, require('./sample_data/sample_sparse.json'));
+        return delay<SparseRestaurant[]>(250, require('./sample/sample_sparse.json'));
     }
 
     searchRestaurantByName(name: string): Promise<Restaurant[]> {
-        return delay<Restaurant[]>(250, require('./sample_data/sample_restaurant.json'));
+        return delay<Restaurant[]>(250, require('./sample/sample_restaurant.json'));
     }
     searchRestaurantByLocation(northEast: number, southwest: number): Promise<Restaurant[]> {
-        return delay<Restaurant[]>(250, require('./sample_data/sample_restaurant.json'));
+        return delay<Restaurant[]>(250, require('./sample/sample_restaurant.json'));
     }
     subscribeToPushNotifications(token: string, restaurantid: number): Promise<void> {
         return delay<void>(1000, undefined);
