@@ -40,7 +40,7 @@ export function recreateTables() {
   createTables();
 }
 
-export function getAllStoredRestaurants(): Promise<unknown> {
+export function getAllStoredRestaurants(): Promise<Restaurant[]> {
   let queries: SQLite.Query[] = [
     {
       sql: "SELECT id, name, address, zip_code, city, cur_smiley, geo_lat, geo_long, favorite FROM restaurant",
@@ -50,7 +50,7 @@ export function getAllStoredRestaurants(): Promise<unknown> {
   return new Promise((resolve, reject) => {
     conn.exec(queries, true, (err, result) => {
       if (err) return reject(err);
-      resolve(result);
+      resolve(getSingleResult<Restaurant>(result));
     });
   });
 }
@@ -65,12 +65,12 @@ export function getFavoriteStoredRestaurants(): Promise<Restaurant[]> {
   return new Promise((resolve, reject) => {
     conn.exec(queries, true, (err, result) => {
       if (err) return reject(err);
-      resolve((result as SQLite.ResultSet[])[0].rows as Restaurant[]);
+      resolve(getSingleResult<Restaurant>(result));
     });
   });
 }
 
-export function toggleFavoriteStoredRestaurants(id: number): Promise<unknown> {
+export function toggleFavoriteStoredRestaurants(id: number): Promise<void> {
   let queries: SQLite.Query[] = [
     {
       sql: "UPDATE restaurant SET favorite = ((favorite | 1) - (favorite & 1)) WHERE id = ?",
@@ -78,14 +78,14 @@ export function toggleFavoriteStoredRestaurants(id: number): Promise<unknown> {
     },
   ]
   return new Promise((resolve, reject) => {
-    conn.exec(queries, true, (err, result) => {
+    conn.exec(queries, false, (err, _) => {
       if (err) return reject(err);
-      resolve(result);
+      resolve();
     });
   });
 }
 
-export function deleteStoredRestaurants(): Promise<unknown> {
+export function deleteStoredRestaurants(): Promise<void> {
   let queries: SQLite.Query[] = [
     {
       sql: "DELETE FROM restaurant",
@@ -93,9 +93,9 @@ export function deleteStoredRestaurants(): Promise<unknown> {
     },
   ]
   return new Promise((resolve, reject) => {
-    conn.exec(queries, false, (err, result) => {
+    conn.exec(queries, false, (err, _) => {
       if (err) return reject(err);
-      resolve(result);
+      resolve();
     });
   });
 }
@@ -121,15 +121,17 @@ export function getStoredSettings(): Promise<SettingItem[]> {
     let queries: SQLite.Query[] = [{ sql: "SELECT id, state FROM setting", args: []}];
     conn.exec(queries, true, (err, result) => {
       if (err) return reject(err);
-      resolve((result as SQLite.ResultSet[])[0].rows as SettingItem[])
+      resolve(getSingleResult<SettingItem>(result))
     })
   })
 }
 
-export function insertRestaurants(restaurants: Restaurant[]) {
-  let query = "INSERT INTO restaurant (id, name, address, zip_code, city, cur_smiley, geo_lat, geo_long) values (?, ?, ?, ?, ?, ?, ?, ?)";
-  let args = [];
-  conn.transaction((tx) => {
+export function insertRestaurants(restaurants: Restaurant[]): Promise<void> {
+  return new Promise((resolve, reject) => {
+
+    let query = "INSERT INTO restaurant (id, name, address, zip_code, city, cur_smiley, geo_lat, geo_long) values (?, ?, ?, ?, ?, ?, ?, ?)";
+    let args = [];
+    conn.transaction((tx) => {
     for (const res of restaurants) {
       args = [
         res.id,
@@ -143,7 +145,12 @@ export function insertRestaurants(restaurants: Restaurant[]) {
       ]
       tx.executeSql(query, args);
     }
+    }, () => {reject()}), () => {resolve()} 
   });
+}
+
+function getSingleResult<Type>(resultset: (SQLite.ResultSetError | SQLite.ResultSet)[] | undefined): Type[]{
+  return (resultset as SQLite.ResultSet[])[0].rows as Type[];
 }
 
 createTables();
