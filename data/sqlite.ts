@@ -70,7 +70,25 @@ export function getFavoriteStoredRestaurants(): Promise<Restaurant[]> {
   });
 }
 
-export function toggleFavoriteStoredRestaurants(id: number): Promise<void> {
+export function getSingleFavoriteRestaurant(id: number): Promise<Restaurant> {
+  let queries: SQLite.Query[] = [
+    {
+      sql: "SELECT id, name, address, zip_code, city, cur_smiley, geo_lat, geo_long, favorite" +
+          " FROM restaurant WHERE favorite = 1 AND id = ?",
+      args: [id]
+    }
+  ]
+
+  return new Promise((resolve, reject) => {
+    conn.exec(queries, true, (err, result) => {
+      if (err) return reject(err);
+      let res = (result as SQLite.ResultSet[])[0].rows[0] as Restaurant
+      resolve(res)
+    })
+  })
+}
+
+export function toggleFavoriteStoredRestaurant(id: number): Promise<void> {
   let queries: SQLite.Query[] = [
     {
       sql: "UPDATE restaurant SET favorite = ((favorite | 1) - (favorite & 1)) WHERE id = ?",
@@ -127,15 +145,20 @@ export function getStoredSettings(): Promise<SettingItem[]> {
 }
 
 export function insertRestaurants(restaurants: Restaurant[]): Promise<void> {
-  return new Promise((resolve, reject) => {
-
-    let query = "INSERT INTO restaurant (id, name, address, zip_code, city, cur_smiley, geo_lat, geo_long) values (?, ?, ?, ?, ?, ?, ?, ?)";
-    let args = [];
-    conn.transaction((tx) => {
+  let query = "INSERT INTO restaurant (id, name, favorite, address, zip_code, city, cur_smiley," +
+      " geo_lat, geo_long) values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+  let args = [];
+  return new Promise((resolve, reject) => { conn.transaction((tx) => {
     for (const res of restaurants) {
+      let fave;
+
+      if (typeof res.favorite === 'undefined') fave = 0;
+      else fave = res.favorite ? 1 : 0;
+
       args = [
         res.id,
         res.name,
+        fave,
         res.address,
         res.zip_code,
         res.city,

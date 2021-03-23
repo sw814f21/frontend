@@ -6,7 +6,7 @@ export class RealData implements FindSmileyStorage {
   getFavoriteStoredRestaurants(): Promise<Restaurant[]> {
     return SQLite.getFavoriteStoredRestaurants();
   }
-  functiongetStoredNotifications(): Promise<Notification[]> {
+  getStoredNotifications(): Promise<Notification[]> {
     throw new Error("Method not implemented.");
   }
   getAllSettings(): Promise<SettingItem[]> {
@@ -15,6 +15,13 @@ export class RealData implements FindSmileyStorage {
   storeSettings(settings: SettingItem[]): Promise<void> {
     return SQLite.storeSettings(settings);
   }
-
-
+  getSingleFavoriteRestaurant(id: number): Promise<Restaurant> {
+    return SQLite.getSingleFavoriteRestaurant(id)
+  }
+  toggleFavoriteStoredRestaurant(id: number): Promise<unknown> {
+    return SQLite.toggleFavoriteStoredRestaurant(id)
+  }
+  insertRestaurants(restaurants: Restaurant[]) {
+    SQLite.insertRestaurants(restaurants);
+  }
 }
