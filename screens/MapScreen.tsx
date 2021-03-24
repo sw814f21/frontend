@@ -2,7 +2,7 @@ import * as React from 'react';
 import { StyleSheet, Dimensions, FlatList, Linking } from 'react-native';
 import MapView from 'react-native-maps';
 import { Marker } from "react-native-maps";
-import { Restaurant, SmileyReport } from "../types";
+import { Restaurant, SmileyReport, SparseRestaurant } from "../types";
 
 import { Text, View } from '../components/Themed';
 import { DataAPI } from "../api/api";
@@ -19,7 +19,7 @@ interface MapScreenState {
     region: Region,
     restaurantScreen: boolean
     restaurant?: Restaurant,
-    markers: Restaurant[]
+    markers: SparseRestaurant[]
 }
 
 interface Region {
@@ -79,31 +79,33 @@ export default class MapScreen extends Component<MapScreenProps, MapScreenState>
     }
 
     componentDidMount() {
-        DataAPI().getRestaurants().then(res => {
+        DataAPI().getSparseRestaurants().then(res => {
             this.setState({
                 markers: res
             })
         })
     }
 
-    openRestaurant(obj: Restaurant) {
-        this.setState({
-            region: {
-                latitude: obj.geo_lat,
-                longitude: obj.geo_long,
-                latitudeDelta: 0.05,
-                longitudeDelta: 0.05
-            },
-            restaurantScreen: true,
-            restaurant: obj
+    openRestaurant(markerData: SparseRestaurant) {
+        DataAPI().getRestaurant(markerData.id).then(res => {
+                
+            this.setState({
+                region: {
+                    latitude: markerData.lat,
+                    longitude: markerData.lng,
+                    latitudeDelta: 0.05,
+                    longitudeDelta: 0.05
+                },
+                restaurantScreen: true,
+                restaurant: res
+            })
         })
     }
 
-    renderSmileyMarker(obj: Restaurant) {
+    renderSmileyMarker(obj: SparseRestaurant) {
         return (<Marker
-            coordinate={{ latitude: obj.geo_lat, longitude: obj.geo_long }}
+            coordinate={{ latitude: obj.lat, longitude: obj.lng }}
             key={obj.id}
-            //image={require('../assets/images/favicon.png')}
             onPress={() => this.openRestaurant(obj)}
         >
         </Marker>)
@@ -118,8 +120,8 @@ export default class MapScreen extends Component<MapScreenProps, MapScreenState>
                     initialRegion={this.state.region}
                 >
                     {
-                        this.state.markers.map((smileyProps: Restaurant) => (
-                            this.renderSmileyMarker(smileyProps)
+                        this.state.markers.map((markerData: SparseRestaurant) => (
+                            this.renderSmileyMarker(markerData)
                         ))
                     }
                 </MapView>

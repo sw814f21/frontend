@@ -49,7 +49,7 @@ export interface FindSmileyAPI {
 const httpapi = new HTTPAPI();
 const sampleapi = new SampleAPI();
 
-export function DataAPI(useProd: boolean): FindSmileyAPI {
+export function DataAPI(useProd?: boolean): FindSmileyAPI {
   if (useProd === true) {
     return httpapi;
   }
