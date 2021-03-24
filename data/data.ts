@@ -3,6 +3,9 @@ import * as SQLite from "./sqlite";
 import { FindSmileyStorage } from "./storage";
 
 export class RealData implements FindSmileyStorage {
+  enrichRestaurants(restaurants: Restaurant[]): Promise<Restaurant[]> {
+    return SQLite.enrichRestaurants(restaurants);
+  }
   getFavoriteStoredRestaurants(): Promise<Restaurant[]> {
     return SQLite.getFavoriteStoredRestaurants();
   }
@@ -21,7 +24,7 @@ export class RealData implements FindSmileyStorage {
   toggleFavoriteStoredRestaurant(id: number): Promise<unknown> {
     return SQLite.toggleFavoriteStoredRestaurant(id)
   }
-  insertRestaurants(restaurants: Restaurant[]) {
-    SQLite.insertRestaurants(restaurants);
+  insertRestaurants(restaurants: Restaurant[]): Promise<void> {
+    return SQLite.insertRestaurants(restaurants);
   }
 }

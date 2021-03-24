@@ -16,7 +16,9 @@ export interface FindSmileyStorage {
 
   storeSettings(settings: SettingItem[]): Promise<void>;
 
-  insertRestaurants(restaurants: Restaurant[]): any;
+  insertRestaurants(restaurants: Restaurant[]): Promise<void>;
+
+  enrichRestaurants(restaurants: Restaurant[]): Promise<Restaurant[]>;
 }
 
 const sample_storage = new SampleStorage();
