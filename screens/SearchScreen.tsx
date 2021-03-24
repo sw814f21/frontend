@@ -1,5 +1,5 @@
 import { FontAwesome } from '@expo/vector-icons';
-import * as React from 'react';
+import React from 'react';
 import { StyleSheet, FlatList } from 'react-native';
 
 import { Text, View, TextInput } from '../components/Themed';
@@ -7,6 +7,7 @@ import { smileyFromKey } from "../components/Smileys";
 import { Restaurant } from "../types";
 import i18n from "../i18n/i18n";
 import { DataAPI } from "../api/api";
+import debounce from "lodash.debounce";
 
 function Item({ restaurant }: { restaurant: Restaurant }) {
   let currSmiley = smileyFromKey(restaurant.cur_smiley, { width: '10%' }).smiley;
@@ -27,33 +28,32 @@ function Item({ restaurant }: { restaurant: Restaurant }) {
 
 interface SearchState {
   restaurants: Restaurant[],
-  isLoading: boolean
 }
 
-export default class SearchScreen extends React.Component<{}, SearchState> {
+export default class SearchScreen extends React.Component<any, SearchState>{
 
   constructor(props: any) {
     super(props);
-    this.state = { restaurants: [], isLoading: false, };
+
+    this.state = { restaurants: [] };
   }
 
-  updateList() {
-    this.setState({ isLoading: true })
-    DataAPI().getRestaurants().then((result: Restaurant[]) => {
-      this.setState({ restaurants: result, isLoading: false });
-    });
+  debounced_textchange(value: string) {
+    DataAPI().searchRestaurantByName(value).then(r => {
+      this.setState({ restaurants: r });
+    }).catch(_ => {
+      //Do nothing
+    })
   }
 
-  componentDidMount() {
-    this.updateList();
-  }
+  reportChange = debounce((value) => this.debounced_textchange(value), 250);
 
   render() {
     return (
       <View style={styles.container}>
         <View style={styles.search}>
           <FontAwesome name='search' color='white' size={20} style={styles.icon} />
-          <TextInput placeholder={i18n.t('search.placeholder')} style={styles.flex} />
+          <TextInput placeholder={i18n.t('search.placeholder')} style={styles.flex} onChangeText={e => { this.reportChange(e) }} />
         </View>
         <FlatList
           data={this.state.restaurants}
