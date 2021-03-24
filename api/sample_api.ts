@@ -17,6 +17,8 @@ function delay<T>(timeout: number, value: T): Promise<T> {
  */
 export class SampleAPI implements FindSmileyAPI {
 
+    private DELAY_VALUE: number = 250;
+
     getRestaurant(id: number): Promise<Restaurant> {
         return new Promise((resolve, reject) => {
 
@@ -28,19 +30,22 @@ export class SampleAPI implements FindSmileyAPI {
         })
     }
     getSparseRestaurants(): Promise<SparseRestaurant[]> {
-        return delay<SparseRestaurant[]>(250, require('./sample/sample_sparse.json'));
+        return delay<SparseRestaurant[]>(this.DELAY_VALUE, require('./sample/sample_sparse.json'));
     }
 
     searchRestaurantByName(name: string): Promise<Restaurant[]> {
-        return delay<Restaurant[]>(250, require('./sample/sample_restaurant.json'));
+        let restaurants: Restaurant[] = require('./sample/sample_restaurant.json');
+        const normalstring = name.trim().toLowerCase();
+        let result = restaurants.filter(s => s.name.trim().toLowerCase().includes(normalstring));
+        return delay<Restaurant[]>(this.DELAY_VALUE, result);
     }
     searchRestaurantByLocation(northEast: number, southwest: number): Promise<Restaurant[]> {
-        return delay<Restaurant[]>(250, require('./sample/sample_restaurant.json'));
+        return delay<Restaurant[]>(this.DELAY_VALUE, require('./sample/sample_restaurant.json'));
     }
     subscribeToPushNotifications(token: string, restaurantid: number): Promise<void> {
-        return delay<void>(1000, undefined);
+        return delay<void>(this.DELAY_VALUE, undefined);
     }
     unsubscribeFromPushNotification(token: string, restaurantid: number): Promise<void> {
-        return delay<void>(1000, undefined);
+        return delay<void>(this.DELAY_VALUE, undefined);
     }
 }
