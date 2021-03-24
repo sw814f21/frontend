@@ -8,6 +8,7 @@ import {getTheme} from "./Themed";
 
 interface FavoriteStarState {
     restaurant: Restaurant;
+    size?: number;
 }
 
 interface FavoriteStarProps {
@@ -17,15 +18,16 @@ interface FavoriteStarProps {
 export default class FavoriteStar extends Component<FavoriteStarProps, FavoriteStarState>{
     constructor(props: any) {
         super(props);
-        this.state = { restaurant: props.restaurant }
+        this.state = { restaurant: props.restaurant, ...props }
     }
 
     render() {
         const name = this.state.restaurant.favorite ? 'star' : 'star-o';
+        const size = this.state.size? this.state.size : 30;
         return <FontAwesome
             name={name}
             color={Colors[getTheme()].tint}
-            size={30}
+            size={size}
             onPress={() => {
                 storageAPI().toggleFavoriteStoredRestaurant(this.state.restaurant.id).then(() => {})
                 let copy = this.state.restaurant;
