@@ -3,34 +3,53 @@ import { FindSmileyStorage } from "./storage";
 
 export class SampleStorage implements FindSmileyStorage {
     storeSettings(settings: SettingItem[]): Promise<void> {
-        throw new Error("Method not implemented.");
+        return new Promise((resolve, _) => {
+            console.log(`Simulating insertion of ${settings.length} settings`);
+            resolve();
+        });
     }
 
     getFavoriteStoredRestaurants(): Promise<Restaurant[]> {
         return new Promise((resolve, _) => {
-            console.log('got favorites');
+            console.log('got sample favorites');
             resolve(require('./sample/sample_favorite.json'));
         });
     }
     getStoredNotifications(): Promise<Notification[]> {
         return new Promise((resolve, _) => {
-            console.log('got notifications');
+            console.log('got sample notifications');
             resolve(require('./sample/sample_notification.json'));
         })
     }
     getAllSettings(): Promise<SettingItem[]> {
         return new Promise((resolve, _) => {
-            console.log('got settings');
+            console.log('got sample settings');
             resolve(require('./sample/sample_setting.json'));
         });
     }
     getSingleFavoriteRestaurant(id: number): Promise<Restaurant> {
         throw new Error("Method not implemented")
     }
-    toggleFavoriteStoredRestaurant(id: number): Promise<unknown> {
-        throw new Error("Method not implemented")
+    toggleFavoriteStoredRestaurant(id: number): Promise<void> {
+        return new Promise<void>((resolve, reject) => {
+            console.log(`Simulating favorite of restaurant with id ${id} into the local sample database.`)
+        });
     }
-    insertRestaurants(restaurants: Restaurant[]) {
-        throw new Error("Method not implemented")
+    insertRestaurants(restaurants: Restaurant[]): Promise<void> {
+        return new Promise<void>((resolve, reject) => {
+            console.log(`Simulating insertion of ${restaurants.length} restaurants into the local sample database.`)
+        });
+    }
+    enrichRestaurants(restaurants: Restaurant[]): Promise<Restaurant[]> {
+        return new Promise((resolve, _) => {
+            let favoriterestaurants = require('./sample/sample_favorite.json');
+            for (const fav of favoriterestaurants) {
+                let index = restaurants.findIndex(r => fav.id === r.id);
+                if (index !== -1) {
+                    restaurants[index].favorite = fav.favorite;
+                }
+            }
+            resolve(restaurants);
+        })
     }
 }
