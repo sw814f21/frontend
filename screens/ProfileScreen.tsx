@@ -1,13 +1,14 @@
 import * as React from 'react';
 import { Dimensions, FlatList, StyleSheet, Switch, Button } from 'react-native';
 
-import { Text, View } from '../components/Themed';
+import {getTheme, Text, View} from '../components/Themed';
 import { SettingItem, SettingType } from "../types";
 import { storageAPI } from "../data/storage";
-import {recreateTables, insertRestaurants, getFavoriteStoredRestaurants} from "../data/sqlite";
+import {recreateTables } from "../data/sqlite";
 import { Component } from "react";
 import Constants from "expo-constants";
 import {schedulePushNotification} from "../permissions/permissions";
+import Colors from "../constants/Colors";
 
 const DEFAULT_SETTINGS: SettingItem[] = [
     {
@@ -27,10 +28,12 @@ class ProfileItem extends Component<any, ProfileItemState> {
 
     renderElement(): JSX.Element {
         let settingComponent: JSX.Element;
+        const tint = Colors[getTheme()].tint;
+        const inactiveTint = Colors[getTheme()].inactiveTint;
         switch (this.state.setting.type) {
             case SettingType.Switch:
                 settingComponent = <Switch
-                    trackColor={{ false: "#BDBDBD", true: "#236683" }}
+                    trackColor={{ false: inactiveTint, true: tint }}
                     thumbColor={"white"}
                     onValueChange={v => { this.updateSwitchSetting(v) }} // change setting state
                     value={this.state.setting.state}
@@ -38,7 +41,7 @@ class ProfileItem extends Component<any, ProfileItemState> {
                 break;
             default:
                 settingComponent = <Switch
-                    trackColor={{ false: "#BDBDBD", true: "#236683" }}
+                    trackColor={{ false: inactiveTint, true: tint }}
                     thumbColor={"white"}
                     onValueChange={() => { }}
                     value={this.state.setting.state}
@@ -170,7 +173,7 @@ const styles = StyleSheet.create({
     },
     settingDescription: {
         fontSize: 12,
-        color: "gray",
+        color: Colors[getTheme()].subText,
     },
     separator: {
         marginVertical: 30,

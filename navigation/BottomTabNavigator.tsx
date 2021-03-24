@@ -21,12 +21,17 @@ const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
 export default function BottomTabNavigator() {
     const colorScheme = useColorScheme();
-    Colors[colorScheme].tint = "#236683"
 
     return (
         <BottomTab.Navigator
             initialRouteName="Map"
-            tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}>
+            tabBarOptions={{
+                activeTintColor: Colors[colorScheme].tint,
+                inactiveTintColor: Colors[colorScheme].inactiveTint,
+                keyboardHidesTabBar: true,
+            }}
+            backBehavior={'history'}
+        >
             <BottomTab.Screen
                 name="Search"
                 component={SearchNavigator}

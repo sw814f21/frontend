@@ -4,11 +4,13 @@ import MapView from 'react-native-maps';
 import { Marker } from "react-native-maps";
 import { Restaurant, SmileyReport, SparseRestaurant } from "../types";
 
-import { Text, View } from '../components/Themed';
+import {getTheme, Text, View} from '../components/Themed';
 import { DataAPI } from "../api/api";
 import { Component } from "react";
 import { FontAwesome } from "@expo/vector-icons";
 import { smileyFromKey } from "../components/Smileys";
+import Colors from "../constants/Colors";
+import FavoriteStar from "../components/favorite";
 
 
 interface MapScreenProps {
@@ -51,7 +53,7 @@ function ReportItem({ report }: { report: SmileyReport }) {
             <View style={styles.iconCol}>
                 <FontAwesome
                     name={"external-link"}
-                    color={"#236683"}
+                    color={Colors[getTheme()].tint}
                     size={40}
                     onPress={() => Linking.openURL(report.url)}
                 />
@@ -142,7 +144,7 @@ export default class MapScreen extends Component<MapScreenProps, MapScreenState>
                     >
                         <View style={styles.listHeader}>
                             <View style={styles.iconCol}>
-                                <FontAwesome name={'star-o'} color={"#236683"} size={40} />
+                                <FavoriteStar restaurant={this.state.restaurant} size={40}/>
                             </View>
                             <View style={styles.nameCol}>
                                 <Text style={styles.title}>{this.state.restaurant.name}</Text>
@@ -192,7 +194,6 @@ const styles = StyleSheet.create({
     restaurant: {
         width: Dimensions.get('window').width,
         height: Dimensions.get('window').height * .6,
-        backgroundColor: "white"
     },
     title: {
         fontSize: 20

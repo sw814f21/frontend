@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { Component } from "react";
-import { Dimensions, FlatList, StyleSheet } from 'react-native';
+import { Dimensions, FlatList, StyleSheet} from 'react-native';
 import { smileyFromKey } from "../components/Smileys";
-import { Text, View } from '../components/Themed';
+import { Text, View, getTheme } from '../components/Themed';
 import { storageAPI } from "../data/storage";
 import { Restaurant } from "../types";
 import FavoriteStar from "../components/favorite";
-
+import Colors from "../constants/Colors";
 
 function FavoriteItem({ fave }: { fave: Restaurant }) {
     let smiley = smileyFromKey(fave.cur_smiley).smiley;
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     },
     restaurantAddress: {
         fontSize: 12,
-        color: "gray",
+        color: Colors[getTheme()].inactiveTint,
     },
     separator: {
         marginVertical: 30,

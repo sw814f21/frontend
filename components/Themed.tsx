@@ -1,8 +1,19 @@
 import * as React from 'react';
-import { Text as DefaultText, View as DefaultView, TextInput as DefaultTextInput } from 'react-native';
+import {
+  Text as DefaultText,
+  View as DefaultView,
+  TextInput as DefaultTextInput,
+  Appearance
+} from 'react-native';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
+
+export function getTheme() {
+  let colorScheme = Appearance.getColorScheme();
+  if (colorScheme === null || colorScheme === undefined) colorScheme = 'light';
+  return colorScheme;
+}
 
 export function useThemeColor(
   props: { light?: string; dark?: string },
