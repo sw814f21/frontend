@@ -6,37 +6,28 @@ import {Component} from "react";
 import Colors from "../constants/Colors";
 import {getTheme} from "./Themed";
 
-interface FavoriteStarState {
-    restaurant: Restaurant;
-    size?: number;
-    style?: {};
-}
-
 interface FavoriteStarProps {
     restaurant: Restaurant;
     size?: number;
     style?: {};
 }
 
-export default class FavoriteStar extends Component<FavoriteStarProps, FavoriteStarState>{
+export default class FavoriteStar extends Component<FavoriteStarProps, any>{
     constructor(props: any) {
         super(props);
-        this.state = { restaurant: props.restaurant, ...props }
     }
 
     render() {
-        const name = this.state.restaurant.favorite ? 'star' : 'star-o';
-        const size = this.state.size? this.state.size : 40;
-        const style = this.state.style? this.state.style : {}
         return <FontAwesome
-            name={name}
+            name={this.props.restaurant.favorite ? 'star' : 'star-o'}
             color={Colors[getTheme()].tint}
-            size={size}
-            style={style}
+            size={this.props.size ? this.props.size : 40}
+            style={this.props.style ? this.props.style : {}}
             onPress={() => {
-                storageAPI().toggleFavoriteStoredRestaurant(this.state.restaurant.id).then(() => {})
-                let copy = this.state.restaurant;
+                storageAPI().toggleFavoriteStoredRestaurant(this.props.restaurant.id).then(() => {})
+                let copy = this.props.restaurant;
                 copy.favorite = !copy.favorite;
+                console.log('changed favorite')
                 this.setState( {restaurant: copy })
             }}
         />
