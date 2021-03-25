@@ -14,6 +14,8 @@ interface FavoriteStarState {
 
 interface FavoriteStarProps {
     restaurant: Restaurant;
+    size?: number;
+    style?: {};
 }
 
 export default class FavoriteStar extends Component<FavoriteStarProps, FavoriteStarState>{
