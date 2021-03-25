@@ -72,11 +72,6 @@ const styles = StyleSheet.create({
         fontSize: 12,
         color: Colors[getTheme()].inactiveTint,
     },
-    separator: {
-        marginVertical: 30,
-        height: 1,
-        width: '80%',
-    },
     listItem: {
         flex: 1,
         padding: 20,
