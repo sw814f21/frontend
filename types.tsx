@@ -95,3 +95,10 @@ export type PushNotification = {
 export type PushNotificationData = {
     data: string
 }
+
+export type MapRegion = {
+    latitude: number,
+    longitude: number,
+    latitudeDelta: number,
+    longitudeDelta: number
+}

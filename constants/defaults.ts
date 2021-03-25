@@ -1,4 +1,4 @@
-import {SettingItem} from "../types";
+import {MapRegion, SettingItem} from "../types";
 
 export const DEFAULT_SETTINGS: SettingItem[] = [
     {
@@ -9,3 +9,10 @@ export const DEFAULT_SETTINGS: SettingItem[] = [
         type: 0
     }
 ]
+
+export const DEFAULT_REGION: MapRegion = {
+    latitude: 56.1915,
+    longitude: 11.6345,
+    latitudeDelta: 1.9585,
+    longitudeDelta: 6.0695,
+}
