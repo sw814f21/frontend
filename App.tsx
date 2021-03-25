@@ -8,7 +8,7 @@ import useColorScheme from './hooks/useColorScheme';
 import Navigation from './navigation';
 
 import './i18n/i18n' // initializes i18n, required
-import {registerForPushNotifications, schedulePushNotification} from "./permissions/permissions";
+import {registerForPushNotifications} from "./permissions/permissions";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
