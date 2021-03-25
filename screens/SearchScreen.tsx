@@ -7,6 +7,7 @@ import { smileyFromKey } from "../components/Smileys";
 import { Restaurant } from "../types";
 import i18n from "../i18n/i18n";
 import { DataAPI } from "../api/api";
+import { storageAPI } from "../data/storage";
 import debounce from "lodash.debounce";
 import FavoriteStar from "../components/favorite";
 import Colors from "../constants/Colors";
@@ -42,10 +43,14 @@ export default class SearchScreen extends React.Component<any, SearchState>{
 
   debounced_textchange(value: string) {
     DataAPI().searchRestaurantByName(value).then(r => {
-      this.setState({ restaurants: r });
+      storageAPI().enrichRestaurants(r).then(enriched => {
+        this.setState({ restaurants: enriched });
+      }).catch(_ => {
+        //Do nothing
+      });
     }).catch(_ => {
       //Do nothing
-    })
+    });
   }
 
   reportChange = debounce((value) => this.debounced_textchange(value), 250);

@@ -52,4 +52,13 @@ export class SampleStorage implements FindSmileyStorage {
             resolve(restaurants);
         })
     }
+    enrichRestaurant(restaurant: Restaurant): Promise<Restaurant> {
+        return new Promise((resolve, reject) => {
+            this.enrichRestaurants([restaurant]).then(r => {
+                resolve(r[0]);
+            }).catch(err => {
+                reject(err);
+            });
+        });
+    }
 }
