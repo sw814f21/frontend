@@ -31,13 +31,15 @@ export class SampleStorage implements FindSmileyStorage {
         throw new Error("Method not implemented")
     }
     toggleFavoriteStoredRestaurant(id: number): Promise<void> {
-        return new Promise<void>((resolve, reject) => {
+        return new Promise<void>((resolve, _) => {
             console.log(`Simulating favorite of restaurant with id ${id} into the local sample database.`)
+            resolve();
         });
     }
     insertRestaurants(restaurants: Restaurant[]): Promise<void> {
-        return new Promise<void>((resolve, reject) => {
+        return new Promise<void>((resolve, _) => {
             console.log(`Simulating insertion of ${restaurants.length} restaurants into the local sample database.`)
+            resolve();
         });
     }
     enrichRestaurants(restaurants: Restaurant[]): Promise<Restaurant[]> {

@@ -12,7 +12,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import { smileyFromKey } from "../components/Smileys";
 import Colors from "../constants/Colors";
 import FavoriteStar from "../components/favorite";
-import {DEFAULT_REGION} from "../constants/defaults";
+import { DEFAULT_REGION } from "../constants/defaults";
 
 
 interface MapScreenProps {
@@ -109,6 +109,14 @@ export default class MapScreen extends Component<MapScreenProps, MapScreenState>
         </Marker>)
     }
 
+    favoriteToggled() {
+        if (this.state.restaurant !== undefined) {
+            let copy = this.state.restaurant;
+            copy.favorite = !copy.favorite;
+            this.setState({ restaurant: copy });
+        }
+    }
+
     renderMap(mapStyle: MapStyle = styles.map) {
         return (
             <View style={styles.container}>
@@ -140,7 +148,7 @@ export default class MapScreen extends Component<MapScreenProps, MapScreenState>
                     >
                         <View style={styles.listHeader}>
                             <View style={styles.iconCol}>
-                                <FavoriteStar restaurant={this.state.restaurant} size={40} />
+                                <FavoriteStar restaurant={this.state.restaurant} size={40} onToggleFavorite={() => { this.favoriteToggled() }} />
                             </View>
                             <View style={styles.nameCol}>
                                 <Text style={styles.title}>{this.state.restaurant.name}</Text>
