@@ -9,16 +9,8 @@ import { Component } from "react";
 import Constants from "expo-constants";
 import {schedulePushNotification} from "../permissions/permissions";
 import Colors from "../constants/Colors";
+import {DEFAULT_SETTINGS} from "../constants/defaults";
 
-const DEFAULT_SETTINGS: SettingItem[] = [
-    {
-        id: 0,
-        name: "Pushnotifikationer",
-        description: "Få besked når der sker en opdatering på din favoritrestaurant",
-        state: true,
-        type: 0
-    }
-]
 
 class ProfileItem extends Component<any, ProfileItemState> {
     constructor(props: any) {
@@ -174,11 +166,6 @@ const styles = StyleSheet.create({
     settingDescription: {
         fontSize: 12,
         color: Colors[getTheme()].subText,
-    },
-    separator: {
-        marginVertical: 30,
-        height: 1,
-        width: '80%',
     },
     listItem: {
         flex: 1,

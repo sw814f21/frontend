@@ -1,6 +1,6 @@
 import { FontAwesome } from '@expo/vector-icons';
 import React from 'react';
-import { StyleSheet, FlatList } from 'react-native';
+import {StyleSheet, FlatList, Dimensions} from 'react-native';
 
 import {Text, View, TextInput, getTheme} from '../components/Themed';
 import { smileyFromKey } from "../components/Smileys";
@@ -13,18 +13,18 @@ import FavoriteStar from "../components/favorite";
 import Colors from "../constants/Colors";
 
 function Item({ restaurant }: { restaurant: Restaurant }) {
-  let currSmiley = smileyFromKey(restaurant.cur_smiley, { width: '10%' }).smiley;
+  let currSmiley = smileyFromKey(restaurant.cur_smiley).smiley;
   return (
-    <View style={styles.listitem}>
-      <FavoriteStar restaurant={restaurant} size={40} style={styles.icon}/>
-      {currSmiley}
-      <View>
+    <View style={styles.listItem}>
+      <View style={styles.iconCol}>
+        <FavoriteStar restaurant={restaurant} />
+      </View>
+      <View style={styles.iconCol}>{currSmiley}</View>
+      <View style={styles.textCol}>
         <Text style={styles.title}>{restaurant.name}</Text>
-        <Text style={styles.addressField}>{restaurant.address}</Text>
+        <Text style={styles.addressField}>{restaurant.address}, {restaurant.zip_code} {restaurant.city}</Text>
       </View>
-      <View style={{ marginLeft: 'auto' }}>
-        <Text>6.1km</Text>
-      </View>
+      <Text>6.1km</Text>
     </View>
   );
 }
@@ -59,7 +59,11 @@ export default class SearchScreen extends React.Component<any, SearchState>{
     return (
       <View style={styles.container}>
         <View style={styles.search}>
-          <FontAwesome name='search' color={Colors[getTheme()].tint} size={20} style={styles.icon} />
+          <FontAwesome
+              name='search'
+              color={Colors[getTheme()].tint}
+              size={20}
+          />
           <TextInput
               placeholder={i18n.t('search.placeholder')}
               style={styles.flex}
@@ -84,20 +88,18 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
   title: {
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: 'bold',
   },
   addressField: {
-    color: Colors[getTheme()].subText
+    fontSize: 12,
+    color: Colors[getTheme()].subText,
   },
-  listitem: {
+  listItem: {
+    flex: 1,
     padding: 20,
-    marginVertical: 8,
-    marginHorizontal: 16,
-    flexDirection: 'row',
-  },
-  icon: {
-    marginRight: 10,
+    flexDirection: "row",
+    alignContent: "center"
   },
   flex: {
     flex: 1,
@@ -109,4 +111,11 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 10,
   },
+  iconCol: {
+    width: Dimensions.get('window').width * .1,
+  },
+  textCol: {
+    width: Dimensions.get('window').width * .6,
+    marginLeft: 10,
+  }
 });

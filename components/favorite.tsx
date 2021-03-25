@@ -14,6 +14,8 @@ interface FavoriteStarState {
 
 interface FavoriteStarProps {
     restaurant: Restaurant;
+    size?: number;
+    style?: {};
 }
 
 export default class FavoriteStar extends Component<FavoriteStarProps, FavoriteStarState>{
@@ -24,7 +26,7 @@ export default class FavoriteStar extends Component<FavoriteStarProps, FavoriteS
 
     render() {
         const name = this.state.restaurant.favorite ? 'star' : 'star-o';
-        const size = this.state.size? this.state.size : 30;
+        const size = this.state.size? this.state.size : 40;
         const style = this.state.style? this.state.style : {}
         return <FontAwesome
             name={name}

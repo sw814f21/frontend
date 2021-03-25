@@ -5,7 +5,6 @@ import * as React from 'react';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
-import TabTwoScreen from '../screens/TabTwoScreen';
 import MapScreen from "../screens/MapScreen";
 import SearchScreen from "../screens/SearchScreen";
 import FavoriteScreen from "../screens/FavoriteScreen";

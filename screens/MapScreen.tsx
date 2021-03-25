@@ -2,7 +2,7 @@ import * as React from 'react';
 import { StyleSheet, Dimensions, FlatList, Linking } from 'react-native';
 import MapView from 'react-native-maps';
 import { Marker } from "react-native-maps";
-import { Restaurant, SmileyReport, SparseRestaurant } from "../types";
+import { Restaurant, SmileyReport, SparseRestaurant, MapRegion } from "../types";
 
 import { getTheme, Text, View } from '../components/Themed';
 import { DataAPI } from "../api/api";
@@ -12,6 +12,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import { smileyFromKey } from "../components/Smileys";
 import Colors from "../constants/Colors";
 import FavoriteStar from "../components/favorite";
+import {DEFAULT_REGION} from "../constants/defaults";
 
 
 interface MapScreenProps {
@@ -19,17 +20,10 @@ interface MapScreenProps {
 }
 
 interface MapScreenState {
-    region: Region,
+    region: MapRegion,
     restaurantScreen: boolean
     restaurant?: Restaurant,
     markers: SparseRestaurant[]
-}
-
-interface Region {
-    latitude: number,
-    longitude: number,
-    latitudeDelta: number,
-    longitudeDelta: number
 }
 
 interface MapStyle {
@@ -69,12 +63,7 @@ export default class MapScreen extends Component<MapScreenProps, MapScreenState>
     constructor(props: any) {
         super(props);
         this.state = {
-            region: {
-                latitude: 56.1915,
-                longitude: 11.6345,
-                latitudeDelta: 1.9585,
-                longitudeDelta: 6.0695,
-            },
+            region: DEFAULT_REGION,
             restaurantScreen: false,
             restaurant: undefined,
             markers: [],
