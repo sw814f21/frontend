@@ -15,7 +15,11 @@ function Item({ restaurant }: { restaurant: Restaurant }) {
   let currSmiley = smileyFromKey(restaurant.cur_smiley, { width: '10%' }).smiley;
   return (
     <View style={styles.listitem}>
-      <FavoriteStar restaurant={restaurant} size={40} style={styles.icon}/>
+      <FavoriteStar
+          restaurant={restaurant}
+          size={40}
+          style={styles.icon}
+      />
       {currSmiley}
       <View>
         <Text style={styles.title}>{restaurant.name}</Text>
@@ -54,7 +58,12 @@ export default class SearchScreen extends React.Component<any, SearchState>{
     return (
       <View style={styles.container}>
         <View style={styles.search}>
-          <FontAwesome name='search' color={Colors[getTheme()].tint} size={20} style={styles.icon} />
+          <FontAwesome
+              name='search'
+              color={Colors[getTheme()].tint}
+              size={20}
+              style={styles.icon}
+          />
           <TextInput
               placeholder={i18n.t('search.placeholder')}
               style={styles.flex}
