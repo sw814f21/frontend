@@ -91,10 +91,7 @@ export default class MapScreen extends Component<MapScreenProps, MapScreenState>
 
     openRestaurant(markerData: SparseRestaurant) {
         DataAPI().getRestaurant(markerData.id).then(res => {
-            console.log("name: " + res.name);
-            console.log("fav? " + res.favorite)
             storageAPI().enrichRestaurant(res).then(r => {
-                console.log("fav2? " + r.favorite)
                 this.setState({
                     region: {
                         latitude: markerData.lat,
