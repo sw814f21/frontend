@@ -4,8 +4,9 @@ import MapView from 'react-native-maps';
 import { Marker } from "react-native-maps";
 import { Restaurant, SmileyReport, SparseRestaurant } from "../types";
 
-import {getTheme, Text, View} from '../components/Themed';
+import { getTheme, Text, View } from '../components/Themed';
 import { DataAPI } from "../api/api";
+import { storageAPI } from "../data/storage";
 import { Component } from "react";
 import { FontAwesome } from "@expo/vector-icons";
 import { smileyFromKey } from "../components/Smileys";
@@ -90,18 +91,24 @@ export default class MapScreen extends Component<MapScreenProps, MapScreenState>
 
     openRestaurant(markerData: SparseRestaurant) {
         DataAPI().getRestaurant(markerData.id).then(res => {
-                
-            this.setState({
-                region: {
-                    latitude: markerData.lat,
-                    longitude: markerData.lng,
-                    latitudeDelta: 0.05,
-                    longitudeDelta: 0.05
-                },
-                restaurantScreen: true,
-                restaurant: res
-            })
-        })
+            storageAPI().enrichRestaurant(res).then(r => {
+                this.setState({
+                    region: {
+                        latitude: markerData.lat,
+                        longitude: markerData.lng,
+                        latitudeDelta: 0.05,
+                        longitudeDelta: 0.05
+                    },
+                    restaurantScreen: true,
+                    restaurant: r
+                });
+            }
+            ).catch(_ => {
+                //Do nothing
+            });
+        }).then(_ => {
+            //Do nothing
+        });
     }
 
     renderSmileyMarker(obj: SparseRestaurant) {
@@ -144,7 +151,7 @@ export default class MapScreen extends Component<MapScreenProps, MapScreenState>
                     >
                         <View style={styles.listHeader}>
                             <View style={styles.iconCol}>
-                                <FavoriteStar restaurant={this.state.restaurant} size={40}/>
+                                <FavoriteStar restaurant={this.state.restaurant} size={40} />
                             </View>
                             <View style={styles.nameCol}>
                                 <Text style={styles.title}>{this.state.restaurant.name}</Text>

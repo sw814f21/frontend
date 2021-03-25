@@ -3,6 +3,16 @@ import * as SQLite from "./sqlite";
 import { FindSmileyStorage } from "./storage";
 
 export class RealData implements FindSmileyStorage {
+
+  enrichRestaurant(restaurant: Restaurant): Promise<Restaurant> {
+    return new Promise((resolve, reject) => {
+      this.enrichRestaurants([restaurant]).then(r => {
+        resolve(r[0]);
+      }).catch(err => {
+        reject(err);
+      });
+    });
+  }
   enrichRestaurants(restaurants: Restaurant[]): Promise<Restaurant[]> {
     return SQLite.enrichRestaurants(restaurants);
   }
