@@ -60,11 +60,6 @@ export type SmileyReport = {
     url: string;
 }
 
-export type Favorite = {
-    favorite: boolean;
-    restaurant: Restaurant;
-}
-
 export enum SettingType {
     Switch = 0,
     // ... e.g., number input, text input, etc
@@ -89,16 +84,6 @@ export type Notification = {
     date: string;
     new_data: any;
     restaurant: Restaurant;
-}
-
-export enum PermissionType {
-    Notifications = 0,
-}
-
-export type Permission = {
-    id: number;
-    type: number;
-    granted: boolean;
 }
 
 export type PushNotification = {
