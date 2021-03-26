@@ -1,15 +1,15 @@
-import * as React from 'react';
-import { Dimensions, FlatList, StyleSheet, Switch, Button } from 'react-native';
-
-import {getTheme, Text, View} from '../components/Themed';
-import { SettingItem, SettingType } from "../types";
-import { storageAPI } from "../data/storage";
-import {recreateTables } from "../data/sqlite";
-import { Component } from "react";
 import Constants from "expo-constants";
-import {schedulePushNotification} from "../permissions/permissions";
+import * as React from 'react';
+import { Component } from "react";
+import { Button, Dimensions, FlatList, StyleSheet, Switch } from 'react-native';
+import { getTheme, Text, View } from '../components/Themed';
 import Colors from "../constants/Colors";
-import {DEFAULT_SETTINGS} from "../constants/defaults";
+import { DEFAULT_SETTINGS } from "../constants/defaults";
+import { recreateTables } from "../data/sqlite";
+import { storageAPI } from "../data/storage";
+import { schedulePushNotification } from "../permissions/permissions";
+import { SettingItem, SettingType } from "../types";
+
 
 
 class ProfileItem extends Component<any, ProfileItemState> {

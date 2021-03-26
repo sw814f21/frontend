@@ -1,6 +1,5 @@
 import { FontAwesome } from "@expo/vector-icons";
-import React from "react";
-import { Component } from "react";
+import React, { Component } from "react";
 import Colors from "../constants/Colors";
 import { storageAPI } from "../data/storage";
 import { Restaurant } from "../types";

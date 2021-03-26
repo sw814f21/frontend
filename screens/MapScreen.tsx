@@ -1,18 +1,17 @@
-import * as React from 'react';
-import { StyleSheet, Dimensions, FlatList, Linking } from 'react-native';
-import MapView from 'react-native-maps';
-import { Marker } from "react-native-maps";
-import { Restaurant, SmileyReport, SparseRestaurant, MapRegion } from "../types";
-
-import { getTheme, Text, View } from '../components/Themed';
-import { DataAPI } from "../api/api";
-import { storageAPI } from "../data/storage";
-import { Component } from "react";
 import { FontAwesome } from "@expo/vector-icons";
+import * as React from 'react';
+import { Component } from "react";
+import { Dimensions, FlatList, Linking, StyleSheet } from 'react-native';
+import MapView, { Marker } from 'react-native-maps';
+import { DataAPI } from "../api/api";
+import FavoriteStar from "../components/FavoriteStar";
 import { smileyFromKey } from "../components/Smileys";
+import { getTheme, Text, View } from '../components/Themed';
 import Colors from "../constants/Colors";
-import FavoriteStar from "../components/favorite";
 import { DEFAULT_REGION } from "../constants/defaults";
+import { storageAPI } from "../data/storage";
+import { MapRegion, Restaurant, SmileyReport, SparseRestaurant } from "../types";
+
 
 
 interface MapScreenProps {
