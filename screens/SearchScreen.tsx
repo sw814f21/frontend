@@ -11,7 +11,6 @@ import i18n from "../i18n/i18n";
 import { Restaurant } from "../types";
 
 
-
 interface SearchState {
   restaurants: Restaurant[],
 }
@@ -21,7 +20,7 @@ export default class SearchScreen extends React.Component<any, SearchState>{
   constructor(props: any) {
     super(props);
 
-    this.state = { restaurants: [] };
+    this.state = { restaurants: [], };
   }
 
   debounced_textchange(value: string) {

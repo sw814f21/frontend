@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { Component } from "react";
-import { Dimensions, FlatList, StyleSheet } from 'react-native';
+import { FlatList, StyleSheet } from 'react-native';
 import ListRestaurantItem from "../components/RestaurantListItem";
-import { getTheme, View } from '../components/Themed';
-import Colors from "../constants/Colors";
+import { View } from '../components/Themed';
 import { storageAPI } from "../data/storage";
 import { Restaurant } from "../types";
 
