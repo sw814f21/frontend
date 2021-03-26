@@ -1,33 +1,16 @@
 import { FontAwesome } from '@expo/vector-icons';
-import React from 'react';
-import {StyleSheet, FlatList, Dimensions} from 'react-native';
-
-import {Text, View, TextInput, getTheme} from '../components/Themed';
-import { smileyFromKey } from "../components/Smileys";
-import { Restaurant } from "../types";
-import i18n from "../i18n/i18n";
-import { DataAPI } from "../api/api";
-import { storageAPI } from "../data/storage";
 import debounce from "lodash.debounce";
-import FavoriteStar from "../components/favorite";
+import React from 'react';
+import { FlatList, StyleSheet } from 'react-native';
+import { DataAPI } from "../api/api";
+import RestaurantListItem from '../components/RestaurantListItem';
+import { getTheme, TextInput, View } from '../components/Themed';
 import Colors from "../constants/Colors";
+import { storageAPI } from "../data/storage";
+import i18n from "../i18n/i18n";
+import { Restaurant } from "../types";
 
-function Item({ restaurant }: { restaurant: Restaurant }) {
-  let currSmiley = smileyFromKey(restaurant.cur_smiley).smiley;
-  return (
-    <View style={styles.listItem}>
-      <View style={styles.iconCol}>
-        <FavoriteStar restaurant={restaurant} />
-      </View>
-      <View style={styles.iconCol}>{currSmiley}</View>
-      <View style={styles.textCol}>
-        <Text style={styles.title}>{restaurant.name}</Text>
-        <Text style={styles.addressField}>{restaurant.address}, {restaurant.zip_code} {restaurant.city}</Text>
-      </View>
-      <Text>6.1km</Text>
-    </View>
-  );
-}
+
 
 interface SearchState {
   restaurants: Restaurant[],
@@ -60,20 +43,20 @@ export default class SearchScreen extends React.Component<any, SearchState>{
       <View style={styles.container}>
         <View style={styles.search}>
           <FontAwesome
-              name='search'
-              color={Colors[getTheme()].tint}
-              size={20}
+            name='search'
+            color={Colors[getTheme()].tint}
+            size={20}
           />
           <TextInput
-              placeholder={i18n.t('search.placeholder')}
-              style={styles.flex}
-              onChangeText={e => { this.reportChange(e) }}
-              placeholderTextColor={Colors[getTheme()].subText}
+            placeholder={i18n.t('search.placeholder')}
+            style={styles.flex}
+            onChangeText={e => { this.reportChange(e) }}
+            placeholderTextColor={Colors[getTheme()].subText}
           />
         </View>
         <FlatList
           data={this.state.restaurants}
-          renderItem={({ item }) => <Item restaurant={item} />}
+          renderItem={({ item }) => <RestaurantListItem restaurant={item} />}
           keyExtractor={(item, _) => item.id.toString()}
         />
       </View>
@@ -87,20 +70,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'flex-start',
   },
-  title: {
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  addressField: {
-    fontSize: 12,
-    color: Colors[getTheme()].subText,
-  },
-  listItem: {
-    flex: 1,
-    padding: 20,
-    flexDirection: "row",
-    alignContent: "center"
-  },
   flex: {
     flex: 1,
   },
@@ -111,11 +80,4 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 10,
   },
-  iconCol: {
-    width: Dimensions.get('window').width * .1,
-  },
-  textCol: {
-    width: Dimensions.get('window').width * .6,
-    marginLeft: 10,
-  }
 });

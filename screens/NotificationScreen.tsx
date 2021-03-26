@@ -1,12 +1,12 @@
 import * as React from 'react';
+import { Component } from "react";
 import { Dimensions, FlatList, StyleSheet } from 'react-native';
-
+import { smileyFromKey } from "../components/Smileys";
 import { Text, View } from '../components/Themed';
 import { storageAPI } from "../data/storage";
-import { Notification, NotificationType } from "../types";
-import { smileyFromKey } from "../components/Smileys";
 import i18n from "../i18n/i18n";
-import { Component } from "react";
+import { Notification, NotificationType } from "../types";
+
 
 function NotificationItem({ notif }: { notif: Notification }) {
     let visualItem;
