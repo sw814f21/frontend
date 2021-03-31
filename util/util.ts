@@ -3,10 +3,15 @@ import { FindSmileyAPI } from "../api/api";
 import { FindSmileyStorage } from "../data/storage";
 import { GeoCoordinate, Restaurant } from "../types";
 
-export function fillSearchData(name: string, location: GeoCoordinate, data_api: FindSmileyAPI, storage_api: FindSmileyStorage): Promise<Restaurant[]> {
+export function fillSearchData(name: string,
+                               location: GeoCoordinate,
+                               data_api: FindSmileyAPI,
+                               storage_api: FindSmileyStorage,
+                               limit: number,
+                               offset: number): Promise<Restaurant[]> {
   return new Promise((resolve, _) => {
     data_api.searchRestaurantByName(name).then(r => {
-      resolve(Promise.all(r.slice(0,250).map(r => abba(r, location, storage_api))));
+      resolve(Promise.all(r.slice(offset, limit).map(r => abba(r, location, storage_api))));
     })
   })
 }
