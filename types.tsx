@@ -35,7 +35,7 @@ export type ProfileParamList = {
   data structures
  */
 
-export type Restaurant = {
+export type Restaurant = GeoCoordinate & {
     id: number;
     name: string;
     address: string;
@@ -43,15 +43,22 @@ export type Restaurant = {
     city: string;
     cur_smiley: number;  // map to enum Smiley
     reports: SmileyReport[];
-    geo_lat: number;
-    geo_long: number;
     favorite?: boolean;
+    distance?: string;
 }
 
-export type SparseRestaurant = {
+export type FavoriteRestaurant = {
   id: number;
+  favorite: boolean;
+}
+
+export type GeoCoordinate = {
   lat: number;
   lng: number;
+}
+
+export type SparseRestaurant = GeoCoordinate & {
+  id: number;
 }
 
 export type SmileyReport = {

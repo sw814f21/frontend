@@ -1,7 +1,7 @@
+import _axios, { AxiosRequestConfig } from "axios";
+import Constants from 'expo-constants';
 import { Restaurant, SparseRestaurant } from "../types";
 import { FindSmileyAPI } from "./api";
-import _axios from "axios";
-import Constants from 'expo-constants';
 
 /**
  * Provides the actual HTTP API for communicating with the server.
@@ -25,10 +25,24 @@ export class HTTPAPI implements FindSmileyAPI {
     });
   }
 
+  transformSomething = function(data: any, headers?: any): any {
+    let result: SparseRestaurant[] = [];
+    let array = JSON.parse(data) as number[][];
+    for (const item of array) {
+      let id = item[0];
+      let lat = item[2];
+      let lng = item[1];
+      result.push({id, lat, lng});
+    }
+    return result
+  }
+
   getSparseRestaurants(): Promise<SparseRestaurant[]> {
+
     return new Promise<SparseRestaurant[]>((resolve, reject) => {
-      this.axios.get('/restaurant').then(res => {
-        resolve(res.data);
+      this.axios.get('/restaurant', {transformResponse: this.transformSomething}).then(res => {
+        
+        resolve((res.data as SparseRestaurant[]).slice(0, 10));
       }).catch(res => {
         reject(res);
       })

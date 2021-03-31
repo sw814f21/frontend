@@ -1,5 +1,5 @@
 import Constants from 'expo-constants';
-import { Notification, Restaurant, SettingItem } from "../types";
+import { FavoriteRestaurant, GeoCoordinate, Notification, Restaurant, SettingItem } from "../types";
 import { RealData } from "./data";
 import { SampleStorage } from "./sample_data";
 
@@ -23,7 +23,7 @@ export interface FindSmileyStorage {
    * Gets a single favorited restaurant.
    * @param id The ID of the restaurant
    */
-  getSingleFavoriteRestaurant(id: number): Promise<Restaurant>;
+  isFavoriteRestaurant(id: number): Promise<boolean>;
 
   /**
    * Toggles favorite of the specific restaurant
@@ -47,13 +47,7 @@ export interface FindSmileyStorage {
    * Enriches restaurants with data from storage. Currently only "favorite"-field.
    * @param restaurants The list of restaurants to enrich.
    */
-  enrichRestaurants(restaurants: Restaurant[]): Promise<Restaurant[]>;
-
-  /**
-   * Enriches a single restaurant with data from storage.
-   * @param restaurant The restaurant to enrich.
-   */
-  enrichRestaurant(restaurant: Restaurant): Promise<Restaurant>;
+  getFavoriteRestaurants(ids: number[]): Promise<FavoriteRestaurant[]>;
 }
 
 const sample_storage = new SampleStorage();

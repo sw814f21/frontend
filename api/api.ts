@@ -1,7 +1,7 @@
+import Constants from 'expo-constants';
 import { Restaurant, SparseRestaurant } from "../types";
 import { HTTPAPI } from "./http_api";
 import { SampleAPI } from "./sample_api";
-import Constants from 'expo-constants';
 
 /**
  * The interface for getting data from the API.

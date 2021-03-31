@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Dimensions, StyleSheet } from 'react-native';
 import Colors from "../constants/Colors";
-import { Restaurant } from "../types";
+import { Restaurant } from '../types';
 import FavoriteStar from "./FavoriteStar";
 import { smileyFromKey } from "./Smileys";
 import { getTheme, Text, View } from './Themed';
@@ -43,7 +43,7 @@ export default class RestaurantItemList extends Component<RestaurantItemListProp
         <Text style={styles.restaurantName}>{this.state.restaurant.name}</Text>
         <Text style={styles.restaurantAddress}>{this.state.restaurant.address}, {this.state.restaurant.zip_code} {this.state.restaurant.city}</Text>
       </View>
-      <Text>6.1km</Text>
+      <Text>{this.state.restaurant.distance}</Text>
     </View>
   }
 

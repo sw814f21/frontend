@@ -1,5 +1,7 @@
 import * as SQLite from 'expo-sqlite';
-import { Restaurant, SettingItem } from '../types';
+import { Restaurant, SettingItem, GeoCoordinate, FavoriteRestaurant } from '../types';
+import getDistance from "geolib/es/getDistance";
+import { GeolibInputCoordinates } from 'geolib/es/types';
 
 const DBNAME: string = "findsmiley.db";
 const conn = SQLite.openDatabase(DBNAME);
@@ -70,11 +72,10 @@ export function getFavoriteStoredRestaurants(): Promise<Restaurant[]> {
   });
 }
 
-export function getSingleFavoriteRestaurant(id: number): Promise<Restaurant> {
+export function isFavoriteRestaurant(id: number): Promise<boolean> {
   let queries: SQLite.Query[] = [
     {
-      sql: "SELECT id, name, address, zip_code, city, cur_smiley, geo_lat, geo_long, favorite" +
-        " FROM restaurant WHERE favorite = 1 AND id = ?",
+      sql: "SELECT 1 FROM restaurant WHERE favorite = 1 AND id = ?",
       args: [id]
     }
   ]
@@ -82,8 +83,7 @@ export function getSingleFavoriteRestaurant(id: number): Promise<Restaurant> {
   return new Promise((resolve, reject) => {
     conn.exec(queries, true, (err, result) => {
       if (err) return reject(err);
-      let res = (result as SQLite.ResultSet[])[0].rows[0] as Restaurant
-      resolve(res)
+      resolve(getSingleResult<Restaurant>(result).length === 1)
     })
   })
 }
@@ -164,8 +164,8 @@ export function insertRestaurants(restaurants: Restaurant[]): Promise<void> {
           res.zip_code,
           res.city,
           res.cur_smiley,
-          res.geo_lat,
-          res.geo_long
+          res.lat,
+          res.lng
         ]
         tx.executeSql(query, args);
       }
@@ -173,21 +173,13 @@ export function insertRestaurants(restaurants: Restaurant[]): Promise<void> {
   });
 }
 
-export function enrichRestaurants(restaurants: Restaurant[]): Promise<Restaurant[]> {
+export function getFavoriteRestaurants(ids: number[]): Promise<FavoriteRestaurant[]> {
   return new Promise((resolve, reject) => {
-    let ids = restaurants.map(r => r.id);
-    let query = `SELECT id, favorite FROM restaurant WHERE id IN (${restaurants.map(_ => '?').join(', ')})`;
+    let query = `SELECT id, favorite FROM restaurant WHERE id IN (${ids.join(', ')})`;
     let queries: SQLite.Query[] = [{ sql: query, args: ids }];
     conn.exec(queries, true, (err, result) => {
       if (err) return reject(err);
-      let favoriterestaurants = (result as SQLite.ResultSet[])[0].rows as Restaurant[];
-      for (const fav of favoriterestaurants) {
-        let index = restaurants.findIndex(r => fav.id === r.id);
-        if (index !== -1) {
-          restaurants[index].favorite = fav.favorite;
-        }
-      }
-      resolve(restaurants);
+      resolve(getSingleResult<FavoriteRestaurant>(result));
     });
   });
 }

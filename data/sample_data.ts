@@ -1,7 +1,11 @@
-import { Notification, Restaurant, SettingItem } from "../types";
+import { FavoriteRestaurant, GeoCoordinate, Notification, Restaurant, SettingItem } from "../types";
 import { FindSmileyStorage } from "./storage";
+import getDistance from "geolib/es/getDistance";
 
 export class SampleStorage implements FindSmileyStorage {
+    isFavoriteRestaurant(id: number): Promise<boolean> {
+        throw new Error("Method not implemented.");
+    }
     storeSettings(settings: SettingItem[]): Promise<void> {
         return new Promise((resolve, _) => {
             console.log(`Simulating insertion of ${settings.length} settings`);
@@ -42,25 +46,16 @@ export class SampleStorage implements FindSmileyStorage {
             resolve();
         });
     }
-    enrichRestaurants(restaurants: Restaurant[]): Promise<Restaurant[]> {
+    getFavoriteRestaurants(ids: number[]): Promise<FavoriteRestaurant[]> {
         return new Promise((resolve, _) => {
-            let favoriterestaurants = require('./sample/sample_favorite.json');
-            for (const fav of favoriterestaurants) {
-                let index = restaurants.findIndex(r => fav.id === r.id);
-                if (index !== -1) {
-                    restaurants[index].favorite = fav.favorite;
+            let restaurants: Restaurant[] = require('./sample/sample_favorite.json');
+            let result: FavoriteRestaurant[] = [];
+            for (const res of restaurants) {
+                if (ids.includes(res.id)) {
+                    result.push({ id: res.id, favorite: true })
                 }
             }
-            resolve(restaurants);
+            resolve(result);
         })
-    }
-    enrichRestaurant(restaurant: Restaurant): Promise<Restaurant> {
-        return new Promise((resolve, reject) => {
-            this.enrichRestaurants([restaurant]).then(r => {
-                resolve(r[0]);
-            }).catch(err => {
-                reject(err);
-            });
-        });
     }
 }

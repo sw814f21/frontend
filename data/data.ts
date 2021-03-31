@@ -1,20 +1,11 @@
-import { Notification, Restaurant, SettingItem } from "../types";
+import { FavoriteRestaurant, GeoCoordinate, Notification, Restaurant, SettingItem } from "../types";
 import * as SQLite from "./sqlite";
 import { FindSmileyStorage } from "./storage";
 
 export class RealData implements FindSmileyStorage {
-
-  enrichRestaurant(restaurant: Restaurant): Promise<Restaurant> {
-    return new Promise((resolve, reject) => {
-      this.enrichRestaurants([restaurant]).then(r => {
-        resolve(r[0]);
-      }).catch(err => {
-        reject(err);
-      });
-    });
-  }
-  enrichRestaurants(restaurants: Restaurant[]): Promise<Restaurant[]> {
-    return SQLite.enrichRestaurants(restaurants);
+  
+  getFavoriteRestaurants(ids: number[]): Promise<FavoriteRestaurant[]> {
+    return SQLite.getFavoriteRestaurants(ids);
   }
   getFavoriteStoredRestaurants(): Promise<Restaurant[]> {
     return SQLite.getFavoriteStoredRestaurants();
@@ -28,8 +19,8 @@ export class RealData implements FindSmileyStorage {
   storeSettings(settings: SettingItem[]): Promise<void> {
     return SQLite.storeSettings(settings);
   }
-  getSingleFavoriteRestaurant(id: number): Promise<Restaurant> {
-    return SQLite.getSingleFavoriteRestaurant(id)
+  isFavoriteRestaurant(id: number): Promise<boolean> {
+    return SQLite.isFavoriteRestaurant(id)
   }
   toggleFavoriteStoredRestaurant(id: number): Promise<unknown> {
     return SQLite.toggleFavoriteStoredRestaurant(id)
