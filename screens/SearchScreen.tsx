@@ -13,10 +13,14 @@ import i18n from "../i18n/i18n";
 import { GeoCoordinate, Restaurant } from '../types';
 import { fillSearchData } from '../util/util';
 
+const PAGE = 20;
 
 interface SearchState {
   restaurants: Restaurant[],
   location: GeoCoordinate,
+  offset: number;
+  limit: number;
+  searchQuery: string;
 }
 
 export default class SearchScreen extends React.Component<any, SearchState>{
@@ -24,7 +28,7 @@ export default class SearchScreen extends React.Component<any, SearchState>{
   constructor(props: any) {
     super(props);
 
-    this.state = { restaurants: [], location: {lat: 0, lng: 0}};
+    this.state = { restaurants: [], location: {lat: 0, lng: 0}, offset: 0, limit: PAGE, searchQuery: ''};
   }
 
   updateLocation = () => {
@@ -49,9 +53,22 @@ export default class SearchScreen extends React.Component<any, SearchState>{
     // .catch(e => {
     //   console.error(e);
     // });
-    fillSearchData(value, this.state.location, DataAPI(), storageAPI()).then(res => {
-      this.setState({restaurants: res});
+    this.setState({restaurants: []})
+    fillSearchData(value, this.state.location, DataAPI(), storageAPI(), PAGE, 0).then(res => {
+      this.setState({restaurants: res, searchQuery: value, limit: PAGE, offset: 0});
     })
+  }
+
+  updateSearchItems = (count: number) => {
+    if (count > (PAGE / 2)) {
+      fillSearchData(this.state.searchQuery, this.state.location, DataAPI(), storageAPI(), this.state.limit, this.state.offset).then(res => {
+        this.setState({
+          restaurants: Array.from(new Set([...this.state.restaurants, ...res])),
+          offset: this.state.offset + PAGE,
+          limit: this.state.limit + PAGE
+        });
+      })
+  }
   }
 
   reportChange = debounce((value) => this.debounced_textchange(value), 250);
@@ -76,6 +93,8 @@ export default class SearchScreen extends React.Component<any, SearchState>{
           data={this.state.restaurants}
           renderItem={({ item }) => <RestaurantListItem restaurant={item} />}
           keyExtractor={(item, _) => item.id.toString()}
+          onEndReached={() => {this.updateSearchItems(this.state.restaurants.length)}}
+          onEndReachedThreshold={0.7}
         />
       </View>
     );
