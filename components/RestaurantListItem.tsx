@@ -41,7 +41,7 @@ export default class RestaurantItemList extends Component<RestaurantItemListProp
       <View style={styles.iconCol}>{smiley}</View>
       <View style={styles.textCol}>
         <Text style={styles.restaurantName}>{this.state.restaurant.name}</Text>
-        <Text style={styles.restaurantAddress}>{this.state.restaurant.address}, {this.state.restaurant.zip_code} {this.state.restaurant.city}</Text>
+        <Text style={styles.restaurantAddress}>{this.state.restaurant.address}, {this.state.restaurant.zipcode} {this.state.restaurant.city}</Text>
       </View>
       <Text>6.1km</Text>
     </View>
