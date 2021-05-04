@@ -1,4 +1,4 @@
-import { Restaurant, SparseRestaurant } from "../types";
+import { Restaurant, SparseRestaurant, RestRestaurant, RestSmileyReport } from "../types";
 import { FindSmileyAPI } from "./api";
 import _axios from "axios";
 import Constants from 'expo-constants';
@@ -17,8 +17,8 @@ export class HTTPAPI implements FindSmileyAPI {
 
   getRestaurant(id: number): Promise<Restaurant> {
     return new Promise<Restaurant>((resolve, reject) => {
-      this.axios.get(`/restaurant/${id}`).then(res => {
-        resolve(res.data);
+      this.axios.get<RestRestaurant>(`/restaurant/${id}`).then(res => {
+        resolve(new Restaurant(res.data));
       }).catch(res => {
         reject(res);
       })
@@ -42,8 +42,8 @@ export class HTTPAPI implements FindSmileyAPI {
           name: searchName
         }
       };
-      this.axios.get('/restaurant/search', parameters).then(res => {
-        resolve(res.data);
+      this.axios.get<RestRestaurant[]>('/restaurant/search', parameters).then(res => {
+        resolve(res.data.map(r => new Restaurant(r)));
       }).catch(res => {
         reject(res);
       })

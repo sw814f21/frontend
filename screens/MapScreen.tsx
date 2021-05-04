@@ -31,7 +31,7 @@ interface MapStyle {
 }
 
 function ReportItem({ report }: { report: SmileyReport }) {
-    let smiley = smileyFromKey(report.smiley)
+    let smiley = smileyFromKey(report.rating)
 
     return (
         <View
@@ -41,7 +41,7 @@ function ReportItem({ report }: { report: SmileyReport }) {
                 {smiley.smiley}
             </View>
             <View style={styles.nameCol}>
-                <Text >{report.date}</Text>
+                <Text >{report.date.toLocaleDateString()}</Text>
                 <Text >{smiley.smileyText}</Text>
             </View>
             <View style={styles.iconCol}>
@@ -152,7 +152,7 @@ export default class MapScreen extends Component<MapScreenProps, MapScreenState>
                             <View style={styles.nameCol}>
                                 <Text style={styles.title}>{this.state.restaurant.name}</Text>
                                 <Text >{this.state.restaurant.address}</Text>
-                                <Text >{this.state.restaurant.zip_code} {this.state.restaurant.city}</Text>
+                                <Text >{this.state.restaurant.zipcode} {this.state.restaurant.city}</Text>
                             </View>
                             <View style={styles.iconCol}>
                                 {smiley.smiley}

@@ -10,7 +10,7 @@ export type SmileyProps = {
 }
 
 interface SmileyData {
-  smiley: any,
+  smiley: JSX.Element,
   smileyText: string
 }
 
