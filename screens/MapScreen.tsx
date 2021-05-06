@@ -8,7 +8,7 @@ import FavoriteStar from "../components/FavoriteStar";
 import { smileyFromKey } from "../components/Smileys";
 import { getTheme, Text, View } from '../components/Themed';
 import Colors from "../constants/Colors";
-import { DEFAULT_REGION } from "../constants/defaults";
+import { DEFAULT_REGION, BOTTOM_TAB_HEIGHT, NAVIGATOR_HEADER_HEIGHT } from "../constants/defaults";
 import { storageAPI } from "../data/storage";
 import { MapRegion, Restaurant, SmileyReport, SparseRestaurant } from "../types";
 
@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
     },
     map: {
         width: Dimensions.get('window').width,
-        height: Dimensions.get('window').height,
+        height: Dimensions.get('window').height - BOTTOM_TAB_HEIGHT - NAVIGATOR_HEADER_HEIGHT,
     },
     restaurantMap: {
         width: Dimensions.get('window').width,
