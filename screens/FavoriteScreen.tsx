@@ -18,7 +18,15 @@ export default class FavoriteScreen extends Component<any, FavoriteScreenState> 
     }
 
     componentDidMount() {
-        storageAPI().getFavoriteStoredRestaurants().then(res => {
+        storageAPI().getFavoriteStoredRestaurants().then((res: any) => {
+            this.setState({
+                favorites: res
+            })
+        })
+    }
+
+    loadFavorites = () => {
+        storageAPI().getFavoriteStoredRestaurants().then((res: any) => {
             this.setState({
                 favorites: res
             })
@@ -26,6 +34,7 @@ export default class FavoriteScreen extends Component<any, FavoriteScreenState> 
     }
 
     render() {
+        this.loadFavorites()
         return (
             <View style={styles.container}>
                 <FlatList
