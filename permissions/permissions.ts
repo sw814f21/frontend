@@ -3,6 +3,7 @@ import Constants from 'expo-constants';
 import * as Notifications from 'expo-notifications';
 import {PushNotification, PushNotificationData} from "../types";
 import {Platform} from "react-native";
+import * as Location from "expo-location";
 
 export const registerForPushNotifications = async () => {
     let token = '';
@@ -30,6 +31,7 @@ export const registerForPushNotifications = async () => {
         console.log(token);
     } else {
         alert('Can\'t retrieve token on virtual device.');
+        return
     }
 
     if (Platform.OS === 'android') {
@@ -53,4 +55,24 @@ export async function schedulePushNotification(notif: PushNotification) {
         },
         trigger: {seconds: 2}
     })
+}
+
+export const registerForLocation = async () => {
+    const { status: curStatus } = await Location.getPermissionsAsync();
+    let finalStatus = curStatus;
+
+    if (curStatus !== 'granted') {
+        const { status } = await Location.requestPermissionsAsync();
+        finalStatus = status;
+    }
+
+    if (finalStatus !== 'granted') {
+        alert('Could not get permissions for location.');
+        return
+    }
+
+    let location = (await Location.getCurrentPositionAsync());
+    console.log(location);
+
+    return location
 }
