@@ -45,7 +45,7 @@ export default class NotificationScreen extends Component<any, NotificationScree
     }
 
     componentDidMount() {
-        storageAPI().getStoredNotifications().then(res => {
+        storageAPI().getStoredNotifications().then((res: Notification[]) => {
             this.setState({
                 notifications: res
             })
