@@ -11,6 +11,7 @@ import Colors from "../constants/Colors";
 import { DEFAULT_REGION } from "../constants/defaults";
 import { storageAPI } from "../data/storage";
 import { MapRegion, Restaurant, SmileyReport, SparseRestaurant } from "../types";
+import * as Location from 'expo-location';
 
 
 
@@ -75,6 +76,16 @@ export default class MapScreen extends Component<MapScreenProps, MapScreenState>
                 markers: res
             })
         })
+        Location.getCurrentPositionAsync().then((location) => {
+            this.setState({
+                region: {
+                    latitude: location.coords.latitude,
+                    longitude: location.coords.longitude,
+                    latitudeDelta: 0.05,
+                    longitudeDelta: 0.05
+                }
+            })
+        })
     }
 
     openRestaurant(markerData: SparseRestaurant) {
@@ -123,6 +134,7 @@ export default class MapScreen extends Component<MapScreenProps, MapScreenState>
                     style={mapStyle}
                     showsUserLocation={true}
                     initialRegion={this.state.region}
+                    region={this.state.region}  // android
                 >
                     {
                         this.state.markers.map((markerData: SparseRestaurant) => (
