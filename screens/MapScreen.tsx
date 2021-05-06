@@ -41,7 +41,7 @@ function ReportItem({ report }: { report: SmileyReport }) {
                 {smiley.smiley}
             </View>
             <View style={styles.nameCol}>
-                <Text >{report.date.toLocaleDateString()}</Text>
+                <Text >{report.date}</Text>
                 <Text >{smiley.smileyText}</Text>
             </View>
             <View style={styles.iconCol}>
@@ -145,6 +145,19 @@ export default class MapScreen extends Component<MapScreenProps, MapScreenState>
                         style={styles.restaurant}
 
                     >
+                        <View
+                            style={styles.closeBtn}
+                        >
+                            <FontAwesome
+                                name={"chevron-down"}
+                                color={Colors[getTheme()].tint}
+                                size={30}
+                                onPress={() => this.setState({
+                                    restaurant: undefined,
+                                    restaurantScreen: false
+                                })}
+                            />
+                        </View>
                         <View style={styles.listHeader}>
                             <View style={styles.iconCol}>
                                 <FavoriteStar restaurant={this.state.restaurant} size={40} onToggleFavorite={() => { this.favoriteToggled() }} />
@@ -218,6 +231,9 @@ const styles = StyleSheet.create({
     },
     nameCol: {
         width: Dimensions.get('window').width * .5,
+    },
+    closeBtn: {
+        alignItems: "center",
     }
 });
 
