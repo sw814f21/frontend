@@ -90,7 +90,11 @@ export default class SearchScreen extends React.Component<any, SearchState>{
           />
         </View>
         <FlatList
-          data={this.state.restaurants}
+          data={this.state.restaurants.sort((a, b) => {
+            if (a.distance === undefined) a.distance = "0"
+            if (b.distance === undefined) b.distance = "0"
+            return parseInt(a.distance) - parseInt(b.distance)
+          })}
           renderItem={({ item }) => <RestaurantListItem restaurant={item} />}
           keyExtractor={(item, _) => item.id.toString()}
           onEndReached={() => {this.updateSearchItems(this.state.restaurants.length)}}
