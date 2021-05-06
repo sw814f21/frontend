@@ -1,5 +1,5 @@
 import * as SQLite from 'expo-sqlite';
-import { Restaurant, SettingItem } from '../types';
+import { Restaurant, SettingItem, Notification } from '../types';
 
 const DBNAME: string = "findsmiley.db";
 const conn = SQLite.openDatabase(DBNAME);
@@ -194,6 +194,16 @@ export function enrichRestaurants(restaurants: Restaurant[]): Promise<Restaurant
 
 function getSingleResult<Type>(resultset: (SQLite.ResultSetError | SQLite.ResultSet)[] | undefined): Type[] {
   return (resultset as SQLite.ResultSet[])[0].rows as Type[];
+}
+
+export function getStoredNotifications(): Promise<Notification[]> {
+  return new Promise((resolve, reject) => {
+    let queries: SQLite.Query[] = [{ sql: "SELECT id, type, date FROM notifications", args: [] }];
+    conn.exec(queries, true, (err, result) => {
+      if (err) return reject(err);
+      resolve(getSingleResult<Notification>(result))
+    })
+  })
 }
 
 createTables();
