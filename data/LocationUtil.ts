@@ -1,16 +1,25 @@
 const haversine = require("fast-haversine");
 
-import { Location } from "../types";
+import { Location, Restaurant } from "../types";
 
 export const DEFAULT_LOCATION: Location = {
   lat: 56.1504185,
   lon: 10.2046389
 }
 
+/**
+ * Returns the distance between two geocoordinates in meters. The result is rounded to nearest 50 m.
+ * @param fromLocation The start location
+ * @param toLocation The end location
+ */
 export function getDistance(fromLocation: Location, toLocation: Location): number {
-  return haversine(fromLocation, toLocation);
+  return Math.round(haversine(fromLocation, toLocation) / 50) * 50;
 }
 
+/**
+ * Prints the distance in a pretty format.
+ * @param distance_in_m The distance in meters.
+ */
 export function formatDistance(distance_in_m: number): String {
   let result: String = "";
   switch (true) {
@@ -32,4 +41,13 @@ export function formatDistance(distance_in_m: number): String {
   }
 
   return result;
+}
+
+export function updateRestaurantDistance(currentLocation: Location, restaurants: Restaurant[]) {
+  for (const restaurant of restaurants) {
+      restaurant.distance = getDistance(currentLocation, {
+        lat: restaurant.latitude,
+        lon: restaurant.longitude,
+      });
+  }
 }
