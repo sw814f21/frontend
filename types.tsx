@@ -46,6 +46,7 @@ export class Restaurant {
     latitude: number;
     longitude: number;
     favorite?: boolean;
+    distance: number = 0;
 
     /**
      *
@@ -73,6 +74,23 @@ export class Restaurant {
       }
       this.cur_smiley = newest_report.value;
       this.reports = temp_reports;
+    }
+
+    /**
+     * compareTo
+     */
+    public compareTo(other: Restaurant) {
+      if (other.distance > this.distance)
+        return -1;
+      if (other.distance < this.distance)
+        return 1;
+      if (other.name !== this.name)
+        return other.name.localeCompare(this.name);
+      if (other.id > this.id)
+        return -1;
+      if (other.id < this.id)
+        return 1;
+      return 0;
     }
 }
 
@@ -165,4 +183,9 @@ export type MapRegion = {
     longitude: number,
     latitudeDelta: number,
     longitudeDelta: number
+}
+
+export type Location = {
+  lat: number,
+  lon: number,
 }
