@@ -16,3 +16,6 @@ export const DEFAULT_REGION: MapRegion = {
     latitudeDelta: 1.9585,
     longitudeDelta: 6.0695,
 }
+
+export const BOTTOM_TAB_HEIGHT: number = 70;
+export const NAVIGATOR_HEADER_HEIGHT: number = 100;

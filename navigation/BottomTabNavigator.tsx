@@ -10,6 +10,7 @@ import SearchScreen from "../screens/SearchScreen";
 import FavoriteScreen from "../screens/FavoriteScreen";
 import NotificationScreen from "../screens/NotificationScreen";
 import ProfileScreen from "../screens/ProfileScreen";
+import {BOTTOM_TAB_HEIGHT, NAVIGATOR_HEADER_HEIGHT} from "../constants/defaults";
 
 import { BottomTabParamList, SearchParamList, NotificationParamList, MapParamList,
     FavoriteParamList, ProfileParamList } from '../types';
@@ -28,6 +29,7 @@ export default function BottomTabNavigator() {
                 activeTintColor: Colors[colorScheme].tint,
                 inactiveTintColor: Colors[colorScheme].inactiveTint,
                 keyboardHidesTabBar: true,
+                style: {height: BOTTOM_TAB_HEIGHT},
             }}
             backBehavior={'history'}
         >
@@ -91,7 +93,8 @@ function SearchNavigator() {
       <SearchStack.Screen
         name="SearchScreen"
               component={SearchScreen}
-        options={{ headerTitle: i18n.t('nav.search_title') }}
+        options={{ headerTitle: i18n.t('nav.search_title'),
+            headerStyle: {height: NAVIGATOR_HEADER_HEIGHT} }}
       />
     </SearchStack.Navigator>
   );
@@ -105,7 +108,8 @@ function NotificationNavigator() {
       <NotificationStack.Screen
         name="NotificationScreen"
         component={NotificationScreen}
-        options={{ headerTitle: i18n.t('nav.notifications_title') }}
+        options={{ headerTitle: i18n.t('nav.notifications_title'),
+            headerStyle: {height: NAVIGATOR_HEADER_HEIGHT} }}
       />
     </NotificationStack.Navigator>
   );
@@ -119,7 +123,8 @@ function MapNavigator() {
             <MapStack.Screen
                 name="MapScreen"
                 component={MapScreen}
-                options={{ headerTitle: i18n.t('nav.map_title') }}
+                options={{ headerTitle: i18n.t('nav.map_title'),
+                    headerStyle: {height: NAVIGATOR_HEADER_HEIGHT} }}
             />
         </MapStack.Navigator>
     );
@@ -133,7 +138,8 @@ function FavoriteNavigator() {
             <FavoriteStack.Screen
                 name="FavoriteScreen"
                 component={FavoriteScreen}
-                options={{ headerTitle: i18n.t('nav.favorite_title') }}
+                options={{ headerTitle: i18n.t('nav.favorite_title'),
+                    headerStyle: {height: NAVIGATOR_HEADER_HEIGHT} }}
             />
         </FavoriteStack.Navigator>
     );
@@ -147,7 +153,8 @@ function ProfileNavigator() {
             <ProfileStack.Screen
                 name="ProfileScreen"
                 component={ProfileScreen}
-                options={{ headerTitle: i18n.t('nav.profile_title') }}
+                options={{ headerTitle: i18n.t('nav.profile_title'),
+                    headerStyle: {height: NAVIGATOR_HEADER_HEIGHT} }}
             />
         </ProfileStack.Navigator>
     );
