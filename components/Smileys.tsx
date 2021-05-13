@@ -1,6 +1,8 @@
 import Svg, { Path, Styles } from 'react-native-svg';
 import i18n from "../i18n/i18n";
 import * as React from 'react';
+import Colors from '../constants/Colors';
+import { getTheme } from './Themed';
 
 export type SmileyProps = {
   style?: Styles,
@@ -51,7 +53,7 @@ export function smileyFromKey(key: number, props?: SmileyProps): SmileyData {
 
 const defaultEliteProps: SmileyProps = {
   style: {
-    backgroundColor: 'white',
+    backgroundColor: Colors[getTheme()].background,
   },
   width: '100%',
   height: '100%',
@@ -60,7 +62,7 @@ const defaultEliteProps: SmileyProps = {
 
 const defaultSmileyProps: SmileyProps = {
   style: {
-    backgroundColor: 'white',
+    backgroundColor: Colors[getTheme()].background,
   },
   width: '100%',
   height: '100%',
