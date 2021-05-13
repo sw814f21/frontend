@@ -1,5 +1,5 @@
 import * as SQLite from 'expo-sqlite';
-import { Restaurant, SettingItem } from '../types';
+import { Restaurant, SettingItem, Notification } from '../types';
 
 const DBNAME: string = "findsmiley.db";
 const conn = SQLite.openDatabase(DBNAME);
@@ -88,19 +88,41 @@ export function getSingleFavoriteRestaurant(id: number): Promise<Restaurant> {
   })
 }
 
-export function toggleFavoriteStoredRestaurant(id: number): Promise<void> {
+function insertRestaurantIfNotExists(res: Restaurant): Promise<void> {
   let queries: SQLite.Query[] = [
     {
-      sql: "UPDATE restaurant SET favorite = ((favorite | 1) - (favorite & 1)) WHERE id = ?",
-      args: [id]
-    },
+      sql: "INSERT OR IGNORE INTO restaurant(id, name, address, zip_code, city, cur_smiley," +
+          " geo_lat," +
+          " geo_long) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+      args: [res.id, res.name, res.address, res.zipcode, res.city, res.cur_smiley, res.latitude, res.longitude]
+    }
   ]
-  return new Promise((resolve, reject) => {
-    conn.exec(queries, false, (err, _) => {
-      if (err) return reject(err);
-      resolve();
+  return new Promise<void>(((resolve, reject) => {
+    conn.transaction((tx) => {
+      tx.executeSql(queries[0].sql, queries[0].args)
+      resolve()
+    }, (reason) => {console.log('failed to insert restaurant ', reason)},
+        () => {console.log('successfully inserted restaurant')})
+  }))
+}
+
+export function toggleFavoriteStoredRestaurant(res: Restaurant): Promise<void> {
+  return insertRestaurantIfNotExists(res).then((r: any) => {
+    let queries: SQLite.Query[] = [
+      {
+        sql: "UPDATE restaurant SET favorite = ((favorite | 1) - (favorite & 1)) WHERE id = ?",
+        args: [res.id]
+      },
+    ]
+    return new Promise((resolve, reject) => {
+      conn.transaction((tx) => {
+        console.log('toggled favorite with id: ' + res.id.toString())
+        tx.executeSql(queries[0].sql, queries[0].args)
+        resolve()
+      }, (reason) => {console.log('failed to update favorite status: ', reason)},
+          () => {console.log('successfully updated favorite status')});
     });
-  });
+  }, reason => {console.log('failed to insert restaurant')});
 }
 
 export function deleteStoredRestaurants(): Promise<void> {
@@ -161,15 +183,15 @@ export function insertRestaurants(restaurants: Restaurant[]): Promise<void> {
           res.name,
           fave,
           res.address,
-          res.zip_code,
+          res.zipcode,
           res.city,
           res.cur_smiley,
-          res.geo_lat,
-          res.geo_long
+          res.latitude,
+          res.longitude
         ]
         tx.executeSql(query, args);
       }
-    }, () => { reject() }), () => { resolve() }
+    }, () => { reject() }, () => { resolve() })
   });
 }
 
@@ -194,6 +216,16 @@ export function enrichRestaurants(restaurants: Restaurant[]): Promise<Restaurant
 
 function getSingleResult<Type>(resultset: (SQLite.ResultSetError | SQLite.ResultSet)[] | undefined): Type[] {
   return (resultset as SQLite.ResultSet[])[0].rows as Type[];
+}
+
+export function getStoredNotifications(): Promise<Notification[]> {
+  return new Promise((resolve, reject) => {
+    let queries: SQLite.Query[] = [{ sql: "SELECT id, type, date FROM notifications", args: [] }];
+    conn.exec(queries, true, (err, result) => {
+      if (err) return reject(err);
+      resolve(getSingleResult<Notification>(result))
+    })
+  })
 }
 
 createTables();

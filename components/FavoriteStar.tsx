@@ -14,7 +14,7 @@ interface FavoriteStarProps {
 
 export default class FavoriteStar extends Component<FavoriteStarProps, any>{
     toggleFavorite() {
-        storageAPI().toggleFavoriteStoredRestaurant(this.props.restaurant.id).then(() => {
+        storageAPI().toggleFavoriteStoredRestaurant(this.props.restaurant).then(() => {
             if (this.props.onToggleFavorite !== undefined) {
                 this.props.onToggleFavorite();
             }

@@ -20,7 +20,7 @@ export class RealData implements FindSmileyStorage {
     return SQLite.getFavoriteStoredRestaurants();
   }
   getStoredNotifications(): Promise<Notification[]> {
-    throw new Error("Method not implemented.");
+    return SQLite.getStoredNotifications();
   }
   getAllSettings(): Promise<SettingItem[]> {
     return SQLite.getStoredSettings();
