@@ -16,7 +16,7 @@
       "fallbackToCacheTimeout": 0
     },
     "extra": {
-      "useSampledata": false,
+      "useSampledata": true,
       "apiUrl": "https://edufinder.dk"
     },
     "assetBundlePatterns": [
