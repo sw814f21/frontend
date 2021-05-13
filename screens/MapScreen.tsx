@@ -77,7 +77,11 @@ export default class MapScreen extends Component<MapScreenProps, MapScreenState>
                 markers: res
             })
         })
-        Location.getCurrentPositionAsync().then((location) => {
+        Location.getCurrentPositionAsync(
+            {
+                accuracy: Location.LocationAccuracy.Balanced
+            }
+        ).then((location) => {
             this.setState({
                 region: {
                     latitude: location.coords.latitude,
