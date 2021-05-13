@@ -1,4 +1,5 @@
 import { FontAwesome } from '@expo/vector-icons';
+import * as ExpoLocation from 'expo-location';
 import debounce from "lodash.debounce";
 import React from 'react';
 import { FlatList, StyleSheet } from 'react-native';
@@ -6,13 +7,15 @@ import { DataAPI } from "../api/api";
 import RestaurantListItem from '../components/RestaurantListItem';
 import { getTheme, TextInput, View } from '../components/Themed';
 import Colors from "../constants/Colors";
+import { DEFAULT_LOCATION, updateRestaurantDistance } from "../data/LocationUtil";
 import { storageAPI } from "../data/storage";
 import i18n from "../i18n/i18n";
-import { Restaurant } from "../types";
+import { Location, Restaurant } from "../types";
 
 
 interface SearchState {
   restaurants: Restaurant[],
+  current_location: Location,
 }
 
 export default class SearchScreen extends React.Component<any, SearchState>{
@@ -20,13 +23,20 @@ export default class SearchScreen extends React.Component<any, SearchState>{
   constructor(props: any) {
     super(props);
 
-    this.state = { restaurants: [], };
+    this.state = {
+      restaurants: [],
+      current_location: DEFAULT_LOCATION,
+    };
   }
 
   debounced_textchange(value: string) {
     DataAPI().searchRestaurantByName(value).then(r => {
       storageAPI().enrichRestaurants(r).then(enriched => {
-        this.setState({ restaurants: enriched });
+        updateRestaurantDistance(this.state.current_location, enriched);
+        enriched = enriched.sort((a, b) => { return a.compareTo(b) });
+        this.setState({
+          restaurants: enriched,
+        });
       }).catch(_ => {
         //Do nothing
       });
@@ -35,6 +45,26 @@ export default class SearchScreen extends React.Component<any, SearchState>{
     });
   }
 
+  componentDidMount() {
+    ExpoLocation.watchPositionAsync(
+      {
+        distanceInterval: 500,
+        accuracy: ExpoLocation.Accuracy.Balanced
+      },
+      (result) => {
+        const newlocation:Location = {
+          lat: result.coords.latitude,
+          lon: result.coords.longitude,
+        };
+        let updatedRestaurants = this.state.restaurants;
+        updateRestaurantDistance(newlocation, updatedRestaurants)
+        this.setState({
+          current_location: newlocation,
+          restaurants: updatedRestaurants,
+        });
+      }
+    )
+  }
   reportChange = debounce((value) => this.debounced_textchange(value), 250);
 
   render() {

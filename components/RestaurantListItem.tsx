@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Dimensions, StyleSheet } from 'react-native';
 import Colors from "../constants/Colors";
+import { formatDistance } from "../data/LocationUtil";
 import { Restaurant } from "../types";
 import FavoriteStar from "./FavoriteStar";
 import { smileyFromKey } from "./Smileys";
@@ -43,7 +44,7 @@ export default class RestaurantItemList extends Component<RestaurantItemListProp
         <Text style={styles.restaurantName}>{this.state.restaurant.name}</Text>
         <Text style={styles.restaurantAddress}>{this.state.restaurant.address}, {this.state.restaurant.zipcode} {this.state.restaurant.city}</Text>
       </View>
-      <Text>6.1km</Text>
+      <Text>{formatDistance(this.state.restaurant.distance)}</Text>
     </View>
   }
 
