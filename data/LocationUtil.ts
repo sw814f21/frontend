@@ -21,6 +21,8 @@ export function getDistance(fromLocation: Location, toLocation: Location): numbe
  * @param distance_in_m The distance in meters.
  */
 export function formatDistance(distance_in_m: number): String {
+  if(distance_in_m == undefined)
+    return "";
   let result: String = "";
   switch (true) {
     case (distance_in_m == 0):
