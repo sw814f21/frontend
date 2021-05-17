@@ -71,7 +71,9 @@ export const registerForLocation = async () => {
         return
     }
 
-    let location = (await Location.getCurrentPositionAsync());
+    let location = (await Location.getCurrentPositionAsync( {
+        accuracy: Location.LocationAccuracy.Balanced,
+    }));
     console.log(location);
 
     return location

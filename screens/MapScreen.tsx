@@ -12,6 +12,7 @@ import { DEFAULT_REGION, BOTTOM_TAB_HEIGHT, NAVIGATOR_HEADER_HEIGHT } from "../c
 import { storageAPI } from "../data/storage";
 import { MapRegion, Restaurant, SmileyReport, SparseRestaurant } from "../types";
 import * as Location from 'expo-location';
+import { formatDateISO } from "../data/LocationUtil";
 
 
 
@@ -42,7 +43,7 @@ function ReportItem({ report }: { report: SmileyReport }) {
                 {smiley.smiley}
             </View>
             <View style={styles.nameCol}>
-                <Text >{report.date}</Text>
+                <Text >{formatDateISO(report.date)}</Text>
                 <Text >{smiley.smileyText}</Text>
             </View>
             <View style={styles.iconCol}>
@@ -76,7 +77,11 @@ export default class MapScreen extends Component<MapScreenProps, MapScreenState>
                 markers: res
             })
         })
-        Location.getCurrentPositionAsync().then((location) => {
+        Location.getCurrentPositionAsync(
+            {
+                accuracy: Location.LocationAccuracy.Balanced
+            }
+        ).then((location) => {
             this.setState({
                 region: {
                     latitude: location.coords.latitude,
@@ -85,7 +90,7 @@ export default class MapScreen extends Component<MapScreenProps, MapScreenState>
                     longitudeDelta: 0.05
                 }
             })
-        })
+        }).catch(_ => {});
     }
 
     openRestaurant(markerData: SparseRestaurant) {
@@ -187,7 +192,7 @@ export default class MapScreen extends Component<MapScreenProps, MapScreenState>
                         <FlatList
                             data={this.state.restaurant.reports}
                             renderItem={({ item }) => <ReportItem report={item} />}
-                            keyExtractor={(item, _) => item.date.toString()}
+                            keyExtractor={(item, _) => item.id.toString()}
                         />
 
                     </View>

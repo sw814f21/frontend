@@ -21,6 +21,8 @@ export function getDistance(fromLocation: Location, toLocation: Location): numbe
  * @param distance_in_m The distance in meters.
  */
 export function formatDistance(distance_in_m: number): String {
+  if(distance_in_m == undefined)
+    return "";
   let result: String = "";
   switch (true) {
     case (distance_in_m == 0):
@@ -50,4 +52,11 @@ export function updateRestaurantDistance(currentLocation: Location, restaurants:
         lon: restaurant.longitude,
       });
   }
+}
+
+export function formatDateISO(date: Date): String {
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const day = date.getDate().toString().padStart(2, '0');
+  return `${year}-${month}-${day}`;
 }

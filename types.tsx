@@ -101,6 +101,7 @@ export type SparseRestaurant = {
 }
 
 export class SmileyReport {
+    id: number;
     rating: number;
     date: Date;
     report_id: string;
@@ -109,6 +110,7 @@ export class SmileyReport {
      *
      */
     constructor(report: RestSmileyReport) {
+      this.id = report.id;
       this.rating = report.rating;
       this.date = new Date(report.date);
       this.report_id = report.report_id;
