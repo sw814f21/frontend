@@ -90,7 +90,7 @@ export default class MapScreen extends Component<MapScreenProps, MapScreenState>
                     longitudeDelta: 0.05
                 }
             })
-        })
+        }).catch(_ => {});
     }
 
     openRestaurant(markerData: SparseRestaurant) {
