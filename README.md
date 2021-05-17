@@ -25,3 +25,12 @@ npm install
 ```
 expo start --host tunnel
 ```
+
+## Production
+For using the app in production mode, set `useSampledata` to `false` (Default is `true`).
+```json
+"extra": {
+  "useSampledata": false,
+  "apiUrl": "https://edufinder.dk"
+},
+```
