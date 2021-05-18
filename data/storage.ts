@@ -29,7 +29,7 @@ export interface FindSmileyStorage {
    * Toggles favorite of the specific restaurant
    * @param id ID of the restaurant to toggle favorite on
    */
-  toggleFavoriteStoredRestaurant(id: number): Promise<unknown>;
+  toggleFavoriteStoredRestaurant(res: Restaurant): Promise<unknown>;
 
   /**
    * Saves the settings.

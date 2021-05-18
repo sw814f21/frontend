@@ -30,9 +30,9 @@ export class SampleStorage implements FindSmileyStorage {
     getSingleFavoriteRestaurant(id: number): Promise<Restaurant> {
         throw new Error("Method not implemented")
     }
-    toggleFavoriteStoredRestaurant(id: number): Promise<void> {
+    toggleFavoriteStoredRestaurant(res: Restaurant): Promise<void> {
         return new Promise<void>((resolve, _) => {
-            console.log(`Simulating favorite of restaurant with id ${id} into the local sample database.`)
+            console.log(`Simulating favorite of restaurant with id ${res.id} into the local sample database.`)
             resolve();
         });
     }

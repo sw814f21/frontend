@@ -6,7 +6,7 @@ export type RootStackParamList = {
 export type BottomTabParamList = {
   Search: undefined;
   Notification: undefined;
-  Map: undefined;
+  Map: MapParamRestaurant;
   Favorite: undefined;
   Profile: undefined;
 };
@@ -20,8 +20,12 @@ export type NotificationParamList = {
 };
 
 export type MapParamList = {
-  MapScreen: undefined;
+  MapScreen: MapParamRestaurant;
 };
+
+export type MapParamRestaurant = {
+  restaurantid: number;
+}
 
 export type FavoriteParamList = {
   FavoriteScreen: undefined;

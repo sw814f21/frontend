@@ -10,14 +10,15 @@ import { getTheme, Text, View } from '../components/Themed';
 import Colors from "../constants/Colors";
 import { DEFAULT_REGION, BOTTOM_TAB_HEIGHT, NAVIGATOR_HEADER_HEIGHT } from "../constants/defaults";
 import { storageAPI } from "../data/storage";
-import { MapRegion, Restaurant, SmileyReport, SparseRestaurant } from "../types";
+import { MapParamRestaurant, MapRegion, Restaurant, SmileyReport, SparseRestaurant } from "../types";
 import * as Location from 'expo-location';
 import { formatDateISO } from "../data/LocationUtil";
 
 
 
 interface MapScreenProps {
-    navigation: any
+    navigation: any,
+    route: any,
 }
 
 interface MapScreenState {
@@ -90,7 +91,24 @@ export default class MapScreen extends Component<MapScreenProps, MapScreenState>
                     longitudeDelta: 0.05
                 }
             })
-        }).catch(_ => {});
+        }).catch(_ => { });
+    }
+
+    render_restaurant_params() {
+        const params: MapParamRestaurant = this.props.route.params;
+        if (params == undefined) {
+            return;
+        }
+        if (params.restaurantid == undefined) {
+            return;
+        }
+        const resid: number = params.restaurantid;
+        this.props.route.params = undefined;
+        this.openRestaurant({
+            id: params.restaurantid,
+            lng: 0,
+            lat: 0,
+        });
     }
 
     openRestaurant(markerData: SparseRestaurant) {
@@ -98,8 +116,8 @@ export default class MapScreen extends Component<MapScreenProps, MapScreenState>
             storageAPI().enrichRestaurant(res).then((r: any) => {
                 this.setState({
                     region: {
-                        latitude: markerData.lat,
-                        longitude: markerData.lng,
+                        latitude: res.latitude,
+                        longitude: res.longitude,
                         latitudeDelta: 0.05,
                         longitudeDelta: 0.05
                     },
@@ -205,6 +223,8 @@ export default class MapScreen extends Component<MapScreenProps, MapScreenState>
     }
 
     render() {
+        this.render_restaurant_params();
+
         if (this.state.restaurantScreen) return this.renderRestaurant();
         else return this.renderMap()
     }
